@@ -7,7 +7,6 @@
 #include "hashing.h"
 
 int main(int argc, const char *argv[]) {
-
     HT h;
     int i, r, v;
     char *characters[] = {"Akamaru", "Sai",     "Yamata", "Itachi",
@@ -19,12 +18,16 @@ int main(int argc, const char *argv[]) {
     // Inserts all except last element in characters
     printf("** INSERTIONS **\n");
     for (i = 0; i < 10; i++) {
-        writeHT(&h, characters[i], strlen(characters[i]));
+        int place = writeHT(&h, characters[i], strlen(characters[i]));
         printf("%s inserted\n", characters[i]);
     }
 
+    putchar('\n');
+    showHT(&h);
+    putchar('\n');
+
     // Looks up all elements in characters
-    printf("**  LOOKUPS **\n");
+    printf("\n**  LOOKUPS **\n");
     for (i = 0; i <= 10; i++) {
         r = readHT(&h, characters[i], &v);
         if (r >= 0)
@@ -34,7 +37,7 @@ int main(int argc, const char *argv[]) {
     }
 
     //  Deletes elements in even positions of characters
-    printf("** REMOVALS **\n");
+    printf("\n** REMOVALS **\n");
     for (i = 0; i <= 10; i += 2) {
         r = deleteHT(&h, characters[i]);
         if (r >= 0)
@@ -43,16 +46,24 @@ int main(int argc, const char *argv[]) {
             printf("%s not found\n", characters[i]);
     }
 
+    putchar('\n');
+    showHT(&h);
+    putchar('\n');
+
     printf("** DUMP: **\n");
     for (i = 0; i < h.size; i++)
         printf("%s, %d\n", (h.tbl)[i].key, (h.tbl)[i].value);
 
     // Inserts elements that have been removed
-    printf("** REINSERTIONS **\n");
+    printf("\n** REINSERTIONS **\n");
     for (i = 0; i <= 10; i += 2) {
         writeHT(&h, characters[i], i);
         printf("%s inserted\n", characters[i]);
     }
+
+    putchar('\n');
+    showHT(&h);
+    putchar('\n');
 
     return 0;
 }

@@ -54,4 +54,7 @@ int readHT(HT *h, char key[], int *value);
 //         uses linear probing treating DELETED positions as occupied
 int deleteHT(HT *h, char key[]);
 
+// Shows a Hash Table
+void showHT(HT *h);
+
 #endif /* hashing_h */

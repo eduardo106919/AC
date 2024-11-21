@@ -1,11 +1,3 @@
-//
-//  hashing.c
-//  Hashing
-//
-//  Created by Jorge Sousa Pinto on 22/11/17.
-//  Copyright © 2017 Jorge Sousa Pinto. All rights reserved.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,40 +28,46 @@ int freeHT(HT *h, int k) {
 }
 
 void growHT(HT *h, int new_size) {
-    HT *new_ht = calloc(1, sizeof(HT));
+    struct pair *new = calloc(new_size, sizeof(struct pair));
 
-    initHT(new_ht, new_size);
+    for (int i = 0; i < new_size; i++)
+        strcpy(new[i].key, EMPTY);
 
     for (int i = 0; i < h->size; i++) {
-        if (!freeHT(h, i))
-            writeHT(new_ht, h->tbl[i].key, h->tbl[i].value);
+        // se o bucket tiver conteudo valido
+        if (!freeHT(h, i)) {
+            int index = hash(h->tbl[i].key, new_size);
+
+            while (strcmp(new[index].key, EMPTY) ||
+                   strcmp(new[index].key, DELETED) == 0)
+                index = (index + 1) % new_size;
+
+            new[index].value = h->tbl[i].value;
+            strcpy(new[index].key, h->tbl[i].key);
+        }
     }
 
     free(h->tbl);
+    h->tbl = new;
+    h->size *= 2;
 
-    h = new_ht;
+    printf("--- REHASHED TO %d BUCKETS ---\n", new_size);
 }
 
 int writeHT(HT *h, char key[], int value) {
-    float load = h->used / h->size;
+    float load = h->used / (float)h->size;
 
     // realocar para o dobro do tamanho
     if (load >= 0.8)
         growHT(h, 2 * h->size);
-    
+
     int index = hash(key, h->size);
 
-    // the i variable is not necessary, load < 0.8 ensures there is always free buckets
-    for (int i = 0; i < h->size; i++) {
-        // if the bucket is free, insert
-        if (freeHT(h, index)) {
-            h->tbl[index].value = value;
-            strcpy(h->tbl[index].key, key);
-        }
-
+    while (!freeHT(h, index))
         index = (index + 1) % h->size;
-    }
 
+    h->tbl[index].value = value;
+    strcpy(h->tbl[index].key, key);
     h->used++;
 
     return index;
@@ -100,4 +98,15 @@ int deleteHT(HT *h, char key[]) {
     }
 
     return index;
+}
+
+void showHT(HT *h) {
+    for (int i = 0; i < h->size; i++) {
+        printf("%02d: ", i);
+        if (freeHT(h, i)) {
+            printf("-------------\n");
+        } else {
+            printf("key: '%s'\tvalue: %d\n", h->tbl[i].key, h->tbl[i].value);
+        }
+    }
 }
