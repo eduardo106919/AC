@@ -73,7 +73,7 @@ int extractMin(Heap *h, Elem *x) {
 int menor(Elem h[], Elem value, int index, int N) {
     if (LEFT(index) >= N || RIGHT(index) >= N)
         return 1;
-    
+
     if (value > h[LEFT(index)] || value > h[RIGHT(index)])
         return 0;
 
