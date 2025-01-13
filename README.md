@@ -1,15 +1,24 @@
 # Algoritmos e Complexidade
 
-Este repositório contém resoluções de fichas e implementações de estruturas de dados lecionadas na unidade curricular Algoritmos e Complexidade, no ano letivo 2024/2025.
+This repository contains the resources provided by the professors of this class and some resolutions of such resources. I finished this class in the year of 2024/2025, so
+the files that I present are the ones the teachers provided us in that year.
 
-As soluções presentes pertencem ao Codeboard feito pelos docentes da cadeira, mais precisamente:
+To note: There is no garanty that the resolutions are correct, some tests have been made, but this is a personal project.
 
-[ ] Hash Tables -> https://codeboard.io/projects/65989
+## Contents:
+There are two theoretical sets of pdf files, one made by professor José Bernardo Barros, and the other by Jorge Sousa Pinto.
+- **Correction**: I am not going to present much on this chapter, it's not very important in my point of view
+- **Complexity**: this chapter discusses the analyses of algorithms and operations, how can we evaluate the cost of such thing, providing a way to compare solutions for a problem
+- **Data Structures**: this chapter presents the following structures:
+    - Hash Tables
+    - Heaps (Priority Queues)
+    - Balanced Trees (AVL Trees)
+- **Graphs**: in this final chapter, it is presented multiple algorithms about graphs, how to represent them, how to traverse them
 
-[ ] Min Heaps -> https://codeboard.io/projects/10165
 
-[ ] Grafos -> https://codeboard.io/projects/301352 && https://codeboard.io/projects/10725
+## Problem Sets
 
-[ ] Árvores AVL -> https://codeboard.io/projects/46752
+The Fichas folder contains the problem sets for this class. The pdfs made by JBB have a set of exercises at the end, there (**WILL BE**) are resolutions for that to.
+You can also find the resolution for the provided tests.
 
-Efetuando uma procura no Codeboard por "AeC", poderás encontrar os respetivos desafios.
+This repository is still in (**EARLY**) development.
