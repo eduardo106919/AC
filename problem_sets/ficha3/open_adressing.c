@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define Size 100
 
@@ -109,16 +111,22 @@ int garb_collection (THash t) {
         temp[i].status = Free;
     }
 
+    // fill the temporary array
     for (i = 0; i < Size; i++) {
         if (t[i].status == Used) {
             index = where(t[i].chave, temp);
 
-            temp[i].status = Used;
-            temp[i].ocorr = t[i].ocorr;
-            temp[i].chave = t[i].chave;
+            temp[index].status = Used;
+            temp[index].ocorr = t[i].ocorr;
+            temp[index].chave = t[i].chave;
         }
+
+        t[i].status = Free;
+        t[i].ocorr = 0;
+        t[i].chave = NULL;
     }
 
+    // fill the table
     for (i = 0; i < Size; i++) {
         t[i].status = temp[i].status;
         t[i].ocorr = temp[i].ocorr;
@@ -127,3 +135,10 @@ int garb_collection (THash t) {
 
     return 0;
 }
+
+
+/*
+Complexidade de garbage_collection:
+    a tabela é percorrida 3 vezes, logo terá uma complexidade de O(N)
+*/
+
