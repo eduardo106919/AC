@@ -1,0 +1,296 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{listings} % Import the package
+\usepackage{xcolor} % For syntax highlighting colors
+\usepackage{amsmath}
+
+\title{Estruturas}
+\author{Eduardo Freitas Fernandes}
+\date{Março 2025}
+
+
+\lstdefinestyle{mystyle}{
+    language=C,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    breaklines=true,
+    frame=single
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Resolução}
+
+\textbf{Exercício 1}
+
+\begin{lstlisting}[style=mystyle]
+#define SIZE 1009
+
+typedef struct no {
+    char matricula[6];
+    struct no *next;
+} No;
+
+typedef No *Tabela[SIZE];
+\end{lstlisting}
+
+Implemente uma função \texttt{int hash(char matricula[6])} de hash razoável para este problema:
+\begin{lstlisting}[style=mystyle]
+int hash(char matricula[6]) {
+    int hash = 0;
+    for (int i = 0; i < 6; i++) {
+        hash += matricula[i];
+    }
+
+    return hash;
+}
+\end{lstlisting}
+
+Implemente a função \texttt{int insert(Tabela t, char matricula[6])} de inserção de uma matrícula na tabela, garantindo que não se armazenam matrículas repetidas.
+\begin{lstlisting}[style=mystyle]
+int insert(Tabela t, char matricula[6]) {
+    int index = hash(matricula) % SIZE;
+
+    No *temp = t[index];
+    while (temp != NULL && strcmp(t, temp->matricula) != 0) {
+        temp = temp->next;
+    }
+
+    int result = 0;
+    if (temp == NULL) {
+        temp = malloc(sizeof(No));
+        if (temp == NULL) {
+            result = 1;
+        } else {
+            strcpy(temp->matricula, matricula);
+            temp->next = t[index];
+            t[index] = temp;
+            result = 0;
+        }
+    }
+
+    return result;
+}
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 2}
+
+\begin{lstlisting}[style=mystyle]
+typedef struct no {
+    int info;
+    int bal;
+    struct no *esq, *dir;
+} No;
+
+typedef No *Arvore;
+\end{lstlisting}
+
+Implemente a função \texttt{Arvore rr(Arvore arv)} que faz uma rotação simples para a direita numa determinada sub-árvore
+\begin{lstlisting}[style=mystyle]
+Arvore rr(Arvore arv) {
+    if (arv != NULL) {
+        Arvore left = arv->esq;
+        // if root is left and left sub tree is not left
+        if (arv->bal < 0 && left->bal > -1) {
+            arv->bal = 0; // BALANCED
+        } else {
+            arv->bal = 1; // RIGHT
+        }
+
+        left->bal = 1; // RIGHT
+
+        arv->esq = left->dir;
+        left->dir = arv;
+
+        return left;
+    }
+
+    return NULL;
+}
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 3}
+\begin{lstlisting}[style=mystyle]
+void bals(Arvore a) {
+    if (!a) return;
+    a->bal = altura(a->dir) - altura(a->esq);
+    bals(a->esq);
+    bals(a->dir);
+}
+\end{lstlisting}
+Complexidade da função \texttt{bals()}:
+\[
+T(N)=
+\begin{cases}
+    0, & \text{se } N < 1 \\
+    2 \times (N/2) + 2 \times \log N, & \text{se } N > 0 
+\end{cases}
+\]
+
+\[
+T(N)=\sum_{i=1}^{\log N} N = O(N \times \log N)
+\]
+
+\vspace{0.7cm}
+\textbf{Exercício 4}
+\begin{lstlisting}[style=mystyle]
+typedef struct s {
+    char *sin;
+    struct s *next;
+} Sin;
+
+typedef struct p {
+    char *pal;
+    Sin *sins;
+    struct p *next;
+} Pal;
+
+#define TAM ...
+typedef Pal *Dic[TAM];
+
+int hash(char *pal);
+\end{lstlisting}
+
+Implemente a função \texttt{void sinonimos(Dic d, char *pal)} que, dada uma palavra, imprime todos os seus sinónimos:
+\begin{lstlisting}[style=mystyle]
+void sinonimos(Dic d, char *pal) {
+    if (d != NULL && pal != NULL) {
+        int index = hash(pal) % TAM;
+
+        Pal *temp = d[index];
+
+        while (temp != NULL && strcmp(temp->pal, pal) != 0) {
+            temp = temp->next;
+        }
+
+        // found the word
+        if (temp != NULL) {
+            Sin *aux = temp->sins;
+
+            while (aux != NULL) {
+                if (aux->sin != NULL)
+                    printf("%s\n", aux->sin);
+                aux = aux->next;
+            }
+
+        }
+    }
+}
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 5}
+\begin{lstlisting}[style=mystyle]
+#define TAM ...
+
+typedef int Heap[TAM];
+
+typedef struct nodo {
+    int val;
+    struct no *esq, *dir;
+} Nodo, *Tree;
+\end{lstlisting}
+
+Implemente uma função que converte uma min-heap representada num array para uma min-heap representada como uma árvore do tipo indicado:
+\begin{lstlisting}[style=mystyle]
+Tree heap_to_tree(Heap h, int start) {
+    Tree result = NULL;
+    if (start < TAM && start >= 0) {
+        result = malloc(sizeof(Nodo));
+
+        if (result == NULL) {
+            // error handling ??
+            return NULL;
+        }
+
+        result->val = h[start];
+        result->esq = heap_to_tree(h, 2 * start + 1);
+        result->dir = heap_to_tree(h, 2 * start + 2);
+    }
+
+    return result;
+}
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 6}
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 7}
+\begin{lstlisting}[style=mystyle]
+typedef struct node {
+    into info;
+    struct node *esq, *dir;
+} *Node;
+
+\end{lstlisting}
+
+Escreva uma função \texttt{buildBST()} que, dado um array de inteiros ordenado por ordem crescente \texttt{arr} com \texttt{n} elementos, constrói uma árvore binária de procura balanceada com todos os elementos do array.
+\begin{lstlisting}[style=mystyle]
+Node buildBST(int arr[], int n) {
+
+}
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 8}
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\vspace{0.7cm}
+\textbf{Exercício 9}
+\begin{lstlisting}[style=mystyle]
+#define MaxH ...
+
+typedef struct mHeap {
+    int tamanho;
+    int heap [MaxH];
+} *MinHeap;
+\end{lstlisting}
+
+Defina uma função que altera o valor do elemento que está na posição \texttt{pos} para \texttt{valor}, fazendo as trocas necessárias para que se mantenham as propriedades da heap \texttt{h}.
+\begin{lstlisting}[style=mystyle]
+void muda (MinHeap h, int pos, int valor) {
+
+}
+\end{lstlisting}
+
+
+\vspace{0.7cm}
+\textbf{Exercício 10}
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle]
+\end{lstlisting}
+
+
+
+\end{document}
