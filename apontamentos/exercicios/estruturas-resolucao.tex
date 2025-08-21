@@ -1,0 +1,72 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{minted}
+
+\title{Estruturas de Dados\\ Resolução de exercícios de testes}
+\author{Eduardo Freitas Fernandes}
+\date{2025}
+
+\setminted{
+	frame=single
+}
+
+\begin{document}
+	
+\maketitle
+	
+	
+\noindent \textbf{Exercício 1}
+
+\begin{minted}{c}
+int hash(char matricula[6]) {
+}
+\end{minted}
+
+\begin{minted}{c}
+int insert(Tabela t, char matricula[6]) {
+}
+\end{minted}
+
+	
+\noindent \textbf{Exercício 2}
+
+\begin{minted}{c}
+Arvore rr(Arvore arv) {
+}
+\end{minted}
+
+	
+\noindent \textbf{Exercício 3}\\
+\[
+	T(N) =
+	\begin{cases}
+		0 & N \leq 0 \\
+		2 \times T_{altura}(N/2) + 2 \times T(N/2) & N > 0
+	\end{cases}
+\]
+\[
+	=
+	\begin{cases}
+		0 & N \leq 0 \\
+		N + 2 \times T(N/2) & N > 0
+	\end{cases}
+	= \sum_{i=1}^{1+\log_2(N)} N = \Theta(N \times \log_2(N))
+\]
+	
+\noindent \textbf{Exercício 4}
+
+\begin{minted}{c}
+void sinonimos(Dic d, char *pal) {
+}
+\end{minted}
+
+\noindent \textbf{Exercício 5}
+
+\begin{minted}{c}
+Tree heapToTree(Heap h) {
+}
+\end{minted}
+	
+\end{document}

@@ -1,0 +1,61 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\title{Introdução à Análise de Complexidade\\ Resolução de exercícios de testes}
+\author{Eduardo Freitas Fernandes}
+\date{2025}
+
+
+\begin{document}
+	
+	\maketitle
+	
+	\noindent \textbf{Exercício 1}\\
+	
+	\noindent \textbf{Exercício 2}\\
+	\[
+		T(N) = 
+		\begin{cases}
+			0 & N \leq 0 \\
+			T_{processa}(N) + 2 \times T(N/2) & N > 0
+		\end{cases}
+		\quad = \quad
+		\begin{cases}
+			0 & N \leq 0 \\
+			N + 2 \times T(N/2) & N > 0
+		\end{cases}
+	\]
+	\[
+		= \sum_{i=1}^{1+\log_2(N)} N = N \times (1 + \log_2(N)) = \Theta(N \times \log_2(N))
+	\]
+	
+	\noindent \textbf{Exercício 3}\\
+	
+	\noindent \textbf{Exercício 4}\\
+	
+	\noindent \textbf{Exercício 5}\\
+	
+	\noindent \textbf{Exercício 6}\\
+	
+	\noindent \textbf{Exercício 7}\\
+	\[
+		T(N) = 
+		\begin{cases}
+			0 & N \leq 0 \\
+			1 + 2 \times T(N/2) & N > 0
+		\end{cases}
+		= \sum_{i=0}^{1+\log_2(N)} 2^i = 		
+	\]
+
+	\noindent \textbf{Exercício 8}\\
+	
+	\noindent \textbf{Exercício 9}\\
+	
+	\noindent \textbf{Exercício 10}\\
+	
+	\noindent \textbf{Exercício 11}\\
+	~
+\end{document}
