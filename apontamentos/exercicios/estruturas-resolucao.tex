@@ -3,13 +3,17 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{minted}
+\usepackage{enumitem}
+
 
 \title{Estruturas de Dados\\ Resolução de exercícios de testes}
 \author{Eduardo Freitas Fernandes}
 \date{2025}
 
 \setminted{
-	frame=single
+	frame=single,
+	tabsize=4,
+	breaklines=true
 }
 
 \begin{document}
@@ -21,11 +25,34 @@
 
 \begin{minted}{c}
 int hash(char matricula[6]) {
+	unsigned int hash = 0;
+	unsigned int base = 31; // número primo
+	
+	while (*matricula != '\0') {
+		hash = hash * base + (unsigned int) (*matricula);
+		matricula++;
+	}
+	
+	return hash;
 }
 \end{minted}
 
 \begin{minted}{c}
 int insert(Tabela t, char matricula[6]) {
+	int index = hash(matricula) % SIZE;
+	struct no ** temp = &(t[index]);
+	
+	while (*temp != NULL && strcmp((*temp)->matricula, matricula)) {
+		temp = &((*temp)->next);
+	}
+	
+	if (*temp == NULL) {
+		*temp = malloc(sizeof(struct no));
+		strcpy((*temp)->matricula, matricula);
+		(*temp)->next = NULL;
+	}
+	
+	return index;
 }
 \end{minted}
 
@@ -33,7 +60,24 @@ int insert(Tabela t, char matricula[6]) {
 \noindent \textbf{Exercício 2}
 
 \begin{minted}{c}
+#define LEFT (-1)
+#define BALANCED 0
+#define RIGHT 1
+
 Arvore rr(Arvore arv) {
+	Arvore left = arv->esq;
+	int root_status = arv->bal;
+	int left_status = left->bal;
+	
+	arv->esq = left->dir;
+	left->dir = arv;
+	
+	if (root_status == RIGHT && left_status <= BALANCED)
+		arv->bal = BALANCED;
+	else
+		arv->bal = LEFT;
+	
+	return left;
 }
 \end{minted}
 
@@ -59,14 +103,251 @@ Arvore rr(Arvore arv) {
 
 \begin{minted}{c}
 void sinonimos(Dic d, char *pal) {
+	int index = hash(pal) % TAM;
+	struct p *temp = d[index];
+	
+	while (temp != NULL && strcmp(temp->pal, pal))
+		temp = temp->next;
+	
+	if (temp != NULL) {
+		struct s *aux = temp->sins;
+		while (aux) {
+			printf("'%s' == '%s'\n", pal, aux->sin);
+			aux = aux->next;
+		}
+	}
 }
 \end{minted}
 
 \noindent \textbf{Exercício 5}
 
 \begin{minted}{c}
-Tree heapToTree(Heap h) {
+Tree heapToTreeRec(Heap h, int i, int size) {
+	if (i >= size)
+		return NULL;
+	
+	Tree root = malloc(sizeof(struct nodo));
+	root->val = h[i];
+	root->esq = heapToTreeRec(h, 2 * i + 1, size);
+	root->dir = heapToTreeRec(h, 2 * i + 2, size);
+	
+	return root;
+}
+	
+Tree heapToTree(Heap h, int size) {
+	return heapToTreeRec(h, 0, size);
 }
 \end{minted}
+
+\noindent \textbf{Exercício 6}
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{imgs/6-1.png}
+		\caption{Inserir 50, 20, 10, 60}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{imgs/6-2.png}
+		\caption{Inserir 40, 30, 70}
+	\end{minipage}
+\end{figure}	
 	
+\noindent \textbf{Exercício 7}
+	
+\begin{minted}{c}
+Node buildBST(int arr[], int n) {
+	if (n <= 0)
+		return NULL;
+	
+	int middle = n / 2;
+	Node root = malloc(sizeof(struct node));
+	root->info = arr[middle];
+	root->esq = buildBST(arr, middle);
+	root->dir = buildBST(arr + middle, n - middle);
+	
+	return root;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 8}
+
+\begin{minted}{c}
+#define SIZE 1001
+
+typedef struct count {
+	int store[SIZE];
+	int total;
+} Count;
+
+void init_count(Count *c) {
+	c->total = 0;
+	for (int i = 0; i < SIZE; i++)
+		c->store[i] = 0;
+}
+
+void insert(Count *c, int x) {
+	c->store[x]++;
+	c->total++;
+}
+
+int check(Count *c, int x) {
+	return c->store[x];
+}
+
+void show(Count *c) {
+	int count = 0, i, j;
+	for (i = 0; i < SIZE && count < c->total; i++) {
+		for (j = 0; j < c->store[i]; j++)
+			printf("%d ", i);
+		count += c->store[i];
+	}
+}
+\end{minted}
+
+\noindent \textbf{Exercício 9}
+
+\begin{minted}{c}
+#define PARENT(i) ((i - 1) / 2)
+#define LEFT(i) (2 * i + 1)
+#define RIGHT(i) (2 * i + 2)
+
+void swap(MinHeap h, int i, int j) {
+	int temp = h->heap[i];
+	h->heap[i] = h->heap[j];
+	h->heap[j] = temp;
+}
+
+void bubbleUp(MinHeap h, int i) {
+	int parent = PARENT(i);
+	while (i > 0 && h->heap[parent] > h->heap[i]) {
+		swap(h, i, parent);
+		i = parent;
+		parent = PARENT(parent);
+	}
+}
+
+void muda (MinHeap h, int pos, int valor) {
+	h->heap[pos] = valor;
+	bubbleUp(h, pos);
+}
+\end{minted}
+
+\noindent \textbf{Exercício 10}
+
+\begin{minted}{c}
+int procura (ABPInt a, int l, int u) {
+	while (a != NULL) {
+		if (a->valor < u && a->valor > l)
+			return 1;
+		
+		if (a->valor >= u)
+			a = a->esq;
+		else if (a->valor <= l)
+			a = a->dir;
+	}
+	
+	return 0;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 11}\\
+
+\noindent Análise de complexidade da função \texttt{procura()}:
+\begin{itemize}
+	\item \textbf{Melhor Caso}: a raiz da árvore está entre \texttt{l} e \texttt{u}.
+	\item \textbf{Pior Caso}: os valores guardados na árvore não estão presentes no intervalo definido por \texttt{l} e \texttt{u}, ou estão no último nível da árvore.
+\end{itemize}
+\[
+	T(N) = \sum_{i=1}^{1+\log_2(N)} 1 = 1 + \log_2(N) = \Theta(\log_2(N))
+\]
+
+\noindent \textbf{Exercício 12}
+
+\begin{minted}{c}
+int biggest(MinHeap *h) {
+	// as folhas da heap são os maiores elementos
+	// logo basta percorrer apenas esses elementos
+	int stop = h->tamanho / 2;
+	int max = h->heap[h->tamanho - 1];
+	
+	for (int i = h->tamanho - 2; i >= 0 && i >= stop; i--)
+		if (h->heap[i] > max)
+			max = h->heap[i];
+	
+	return max;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 13}
+
+\begin{minted}{c}
+int rdir(AVL *tptr) {
+	if (*tptr == NULL || (*tptr)->esq == NULL)
+		return -1;
+	
+	AVL left = (*tptr)->esq;
+	(*tptr)->esq = left->dir;
+	*tptr = left;
+	
+	return 0;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 14}
+
+
+
+\noindent \textbf{Exercício 15}\\
+
+\noindent Tabelas de Hash:
+\begin{enumerate}[label=\alph*)]
+	\item quando todas as \texttt{n} inserções colidem na mesma posição, tornando a tabela de hash numa lista ligada, com complexidade de O(N) na pesquisa.
+	\item 
+	\item
+\end{enumerate}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 16}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 17}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 18}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 19}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 20}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 21}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 22}
+
+\begin{minted}{c}
+\end{minted}
+
+
+
 \end{document}
