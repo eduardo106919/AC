@@ -105,10 +105,8 @@ Arvore rr(Arvore arv) {
 void sinonimos(Dic d, char *pal) {
 	int index = hash(pal) % TAM;
 	struct p *temp = d[index];
-	
 	while (temp != NULL && strcmp(temp->pal, pal))
 		temp = temp->next;
-	
 	if (temp != NULL) {
 		struct s *aux = temp->sins;
 		while (aux) {
@@ -145,17 +143,19 @@ Tree heapToTree(Heap h, int size) {
 	\centering
 	\begin{minipage}{0.49\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{imgs/6-1.png}
+		\fbox{\includegraphics[width=\textwidth]{imgs/6-1.png}}
 		\caption{Inserir 50, 20, 10, 60}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.49\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{imgs/6-2.png}
+		\fbox{\includegraphics[width=\textwidth]{imgs/6-2.png}}
 		\caption{Inserir 40, 30, 70}
 	\end{minipage}
-\end{figure}	
-	
+\end{figure}
+
+\newpage
+
 \noindent \textbf{Exercício 7}
 	
 \begin{minted}{c}
@@ -177,9 +177,8 @@ Node buildBST(int arr[], int n) {
 
 \begin{minted}{c}
 #define SIZE 1001
-
 typedef struct count {
-	int store[SIZE];
+	char store[SIZE];
 	int total;
 } Count;
 
@@ -190,18 +189,16 @@ void init_count(Count *c) {
 }
 
 void insert(Count *c, int x) {
-	c->store[x]++;
-	c->total++;
+	c->total += c->store[x] == 0 ? 1 : 0;
+	c->store[x] = 1;
 }
 
-int check(Count *c, int x) {
-	return c->store[x];
-}
+int check(Count *c, int x) { return c->store[x]; }
 
 void show(Count *c) {
-	int count = 0, i, j;
+	int count = 0, i;
 	for (i = 0; i < SIZE && count < c->total; i++) {
-		for (j = 0; j < c->store[i]; j++)
+		if (c->store[i] != 0)
 			printf("%d ", i);
 		count += c->store[i];
 	}
@@ -254,6 +251,8 @@ int procura (ABPInt a, int l, int u) {
 }
 \end{minted}
 
+\newpage
+
 \noindent \textbf{Exercício 11}\\
 
 \noindent Análise de complexidade da função \texttt{procura()}:
@@ -297,8 +296,27 @@ int rdir(AVL *tptr) {
 }
 \end{minted}
 
+\newpage
+
 \noindent \textbf{Exercício 14}
 
+\begin{figure}[h]
+	\centering
+	\fbox{\includegraphics[width=0.7\textwidth]{imgs/14-1.png}}
+	\caption{Inserir 10, 20, 30, 70}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/14-2.png}}
+	\caption{Inserir 40}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.8\textwidth]{imgs/14-3.png}}
+	\caption{Inserir 50}
+\end{figure}
 
 
 \noindent \textbf{Exercício 15}\\
@@ -310,43 +328,228 @@ int rdir(AVL *tptr) {
 	\item
 \end{enumerate}
 
-\begin{minted}{c}
-\end{minted}
-
 \noindent \textbf{Exercício 16}
 
-\begin{minted}{c}
-\end{minted}
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.8\textwidth]{imgs/16-1.png}}
+	\caption{Inserir 1, 15, 14, 3, 9, 5 e 27}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.8\textwidth]{imgs/16-2.png}}
+	\caption{Remover 1}
+\end{figure}
 
 \noindent \textbf{Exercício 17}
 
-\begin{minted}{c}
-\end{minted}
+\begin{figure}[h]
+	\centering
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/17.png}}
+	\caption{Árvore AVL}
+\end{figure}
 
-\noindent \textbf{Exercício 18}
+\noindent \textbf{Exercício 18}\\
 
-\begin{minted}{c}
-\end{minted}
+\noindent Tabela de Hash com resolução de colisões por Chaining:
+
+\begin{itemize}
+	\item 
+	\item 
+\end{itemize}
 
 \noindent \textbf{Exercício 19}
 
 \begin{minted}{c}
+void swap(int * array, int i, int j) {
+	int temp = array[i];
+	array[i] = array[j];
+	array[j] = temp;
+}
+
+int *ordenados (MinHeap h) {
+	int *ord = calloc(h->used, sizeof(int));
+	
+	for (int i = 0; i < h->used; i++) {
+		ord[i] = h->values[0];
+		swap(h->values, 0, h->used - 1 - i);
+		bubbleDown(h); // coloca a raiz no nível correto
+	}
+	
+	free(h->values);
+	free(h);
+	
+	return ord;
+}
 \end{minted}
 
-\noindent \textbf{Exercício 20}
+\noindent \textbf{Exercício 20}\\
+
+\noindent Nesta tabela, o fator de carga, é o tamanho médio de cada lista, ou seja, o número médio de colisões, logo: \texttt{load = used / size}
 
 \begin{minted}{c}
+float loadFactorC (HashTableChain t) {
+	int count = 0;
+	EntryChain *temp = NULL;
+	for (int i = 0; i < t->hashsize; i++) {
+		temp = (t->table) + i;
+		while(temp != NULL) {
+			count++;
+			temp = temp->next;
+		}
+	}
+	
+	return count / (float) t->hashsize;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 21}
 
 \begin{minted}{c}
+int hash (int size, char key[]) {
+	int res = 0;
+	for (int i = 0; key[i] != '\0'; i++)
+		res += rank[tolower(key[i]) - 'a'];
+	
+	return res % size;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 22}
 
+
+
+\noindent \textbf{Exercício 23}
+
+
+\[
+	T_{hToAux}(N) =
+	\begin{cases}
+		0 & N \leq 0 \\
+		1 + T_{hToAux}(N/2) & N > 0
+	\end{cases}
+\]
+\[
+	= \sum_{i=0}^{1+\log_2(N)} 2^i = 4 \times N - 1 = \Theta(N)
+\]
+
+\noindent \textbf{Exercício 24}
+
+\begin{minted}{c}
+int hash(char * key);
+
+void doubleTable (HashTableOAddr h) {
+	int d_size = 2 * h->size, index = 0;
+	EntryOAdd * new = calloc(d_size, sizeof(EntryOAdd));
+	// não é necessário inicializar os buckets a FREE
+	// calloc() faz isso
+	
+	for (int i = 0; i < h->size; i++) {
+		index = hash(h->table[i].key) % d_size;
+		while(new[index].status != STATUS_FREE)
+			index = (index + 1) % d_size;
+		
+		new[index].status = STATUS_USED;
+		new[index].info = h->table[i].info;
+		new[index].key = h->table[i].key;
+	}
+	
+	h->size = d_size;
+	free(h->table);
+	h->table = new;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 25}
+
+\begin{minted}{c}
+#define SIZE 1001
+typedef struct count {
+	int store[SIZE];
+	int total;
+} Count;
+
+void init_count(Count *c) {
+	c->total = 0;
+	for (int i = 0; i < SIZE; i++)
+		c->store[i] = 0;
+}
+
+void insert(Count *c, int x) {
+	c->store[x]++;
+	c->total++;
+}
+
+int check(Count *c, int x) { return c->store[x]; }
+
+void show(Count *c) {
+	int count = 0, i, j;
+	for (i = 0; i < SIZE && count < c->total; i++) {
+		for (j = 0; j < c->store[i]; j++)
+			printf("%d ", i);
+		count += c->store[i];
+	}
+}
+\end{minted}
+
+\noindent \textbf{Exercício 26}
+
+\begin{minted}{c}
+#define PARENT(i) ((i - 1) / 2)
+#define LEFT(i) (2 * i + 1)
+#define RIGHT(i) (2 * i + 2)
+
+int menor(MinHeap h, int i) {
+	if (i >= h->used) return 1;
+	
+	int left = LEFT(i);
+	if (left < h->used && h->values[i] > h->values[left])
+		return 0;
+	
+	int right = RIGHT(i);
+	if (right < h->used && h->values[i] > h->values[right])
+		return 0;
+	
+	return menor(h, left) && menor(h, right);
+}
+
+int minHeapOk(MinHeap h) {
+	return menor(h, 0);
+}
+\end{minted}
+
+\noindent \textbf{Exercício 27}
+
 \begin{minted}{c}
 \end{minted}
+
+\noindent \textbf{Exercício 28}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 29}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 30}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 31}
+
+\begin{minted}{c}
+\end{minted}
+
+\noindent \textbf{Exercício 32}
+
+\begin{minted}{c}
+\end{minted}
+
+
 
 
 
