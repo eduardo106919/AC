@@ -5,7 +5,7 @@
 \usepackage{enumitem}
 
 
-\title{Algoritmos e Complexidade\\ Ficha 2\\ Resolução}
+\title{Algoritmos e Complexidade\\ Ficha 2: Resolução}
 
 \author{Eduardo Freitas Fernandes}
 \date{2025}
@@ -13,7 +13,6 @@
 \begin{document}
 	
 	\maketitle
-	
 	
 	\section{Contagem}
 	
@@ -70,7 +69,20 @@
 	\]
 	
 	
-	\noindent \textbf{Exercício 4}
+	\noindent \textbf{Exercício 4}\\
+	
+	\noindent Comparações entre elementos do array:
+	
+	\begin{itemize}
+		\item \textbf{Melhor Caso}: Array estritamente decrescente
+		\item \textbf{Pior Caso}: Array estritamente crescente
+	\end{itemize}
+	\[
+		T_{pior}(N) = \sum_{i=0}^{N-1} \sum_{j=1}^{N-1} 1 = \sum_{i=0}^{N-1} N - 1 = N \times (N-1) = \Theta(N^2)
+	\]
+	
+	\noindent Ao realizar a optimização \texttt{i += m}, serão efetuadas apenas \texttt{N} comparações, pois \texttt{m} terá o valor \texttt{N}, pondo fim ao ciclo. Isto acontece porque o array está ordenado por ordem crescente, então \texttt{m} será o comprimento do maior segmento crescente, que corresponde a \texttt{N}.
+	
 	
 	\section{Definições Recursivas}
 	
@@ -80,11 +92,10 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{imgs/2_1-a}
+		\includegraphics[width=0.8\textwidth]{imgs/2_1-a}
 		%\caption{}
 		\label{fig:2_1-a}
 	\end{figure}
-	
 	\[
 		T(N) = \sum_{i=0}^{N} K = (N + 1) \times K = \Theta(N)
 	\]
@@ -93,11 +104,10 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{imgs/2_1-b}
+		\includegraphics[width=0.8\textwidth]{imgs/2_1-b}
 		%\caption{}
 		\label{fig:2_1-b}
 	\end{figure}
-	
 	\[
 		T(N) = \sum_{i=0}^{1 + \log_2(N)} K = (2 + \log_2(N)) \times K = \Theta(\log_2(N))
 	\]
@@ -110,7 +120,6 @@
 		%\caption{}
 		\label{fig:2_1-c}
 	\end{figure}
-	
 	\[
 		T(N) = \sum_{i=0}^{1 + \log_2(N)} 2^i \times K = K \times (2^{\log_2(N) + 2} - 1) = K \times (4 \times N - 1) = \Theta(N)
 	\]
@@ -119,11 +128,10 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{imgs/2_1-d}
+		\includegraphics[width=0.8\textwidth]{imgs/2_1-d}
 		%\caption{}
 		\label{fig:2_1-d}
 	\end{figure}
-	
 	\[
 		T(N) = K + \sum_{i=1}^{N} i = K + \frac{N \times (N + 1)}{2} = \Theta(N^2)
 	\]
@@ -132,11 +140,10 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{imgs/2_1-e}
+		\includegraphics[width=0.8\textwidth]{imgs/2_1-e}
 		%\caption{}
 		\label{fig:2_1-e}
 	\end{figure}
-	
 	\[
 		T(N) = k + \sum_{i=1}^{1 + \log_2(N)} \frac{N}{2^i} = K + 2^{\log_2(N) + 1} - 1 = K + 2 \times N - 1 = \Theta(N)
 	\]
@@ -149,12 +156,12 @@
 		%\caption{}
 		\label{fig:2_1-f}
 	\end{figure}
-	
 	\[
 		T(N) = k + \sum_{i=1}^{1 + \log_2(N)} N = K + N \times (1 + \log_2(N)) = \Theta(N \times \log_2(N))
 	\]
 	
 	\noindent \textbf{Exercício 2}
+	
 	\[
 		T(N) =
 		\begin{cases}
