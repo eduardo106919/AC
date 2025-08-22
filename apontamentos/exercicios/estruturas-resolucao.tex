@@ -160,8 +160,7 @@ Tree heapToTree(Heap h, int size) {
 	
 \begin{minted}{c}
 Node buildBST(int arr[], int n) {
-	if (n <= 0)
-		return NULL;
+	if (n <= 0) return NULL;
 	
 	int middle = n / 2;
 	Node root = malloc(sizeof(struct node));
@@ -522,31 +521,311 @@ int minHeapOk(MinHeap h) {
 \noindent \textbf{Exercício 27}
 
 \begin{minted}{c}
+HashTable newTable(int hashsize) {
+	HashTable new = malloc(sizeof(struct hashT));
+	new->hashsize = hashsize;
+	new->table = malloc(hashsize * sizeof(Entry));
+	for (int i = 0; i < hashsize; i++)
+		new->table[i] = NULL;
+	
+	return new;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 28}
 
-\begin{minted}{c}
-\end{minted}
+
 
 \noindent \textbf{Exercício 29}
 
 \begin{minted}{c}
+int altura(AVL a) {
+	int height = 0;
+	while (a != NULL) {
+		a = a->bal == Dir ? a->dir : a->esq;
+		height++;
+	}
+	
+	return height;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 30}
 
 \begin{minted}{c}
+AVL rotateLeft(AVL a) {
+	AVL right = a->dir;
+	int root_height = a->altura;
+	int left_diff = root_height - a->esq->altura;
+	int right_diff = root_height - right->altura;
+	
+	if (left_diff <= right_diff) {
+		right->altura = root_height + 1;
+	} else {
+		a->altura--;
+		right->altura++;
+	}
+	
+	a->dir = right->esq;
+	right->esq = a;
+	
+	return right;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 31}
 
 \begin{minted}{c}
+void remApagados(THash h) {
+	int i, index;
+	struct celula * temp = malloc(sizeof(struct celula) * h->tamanho);
+	for (i = 0; i < h->tamanho; i++)
+		h->Tabela[i].estado = Livre;
+	
+	for (i = 0; i < h->tamanho; i++) {
+		if (h->Tabela[i].estado == Ocupado) {
+			index = hash(h->Tabela[i].k, h->tamanho);
+			while (temp[index].estado == Ocupado)
+				index = (index + 1) % h->tamanho;
+			
+			temp[index].estado = Ocupado;
+			temp[index].info = h->Tabela[i].info;
+			temp[index].k = h->Tabela[i].k;
+		}
+	}
+	
+	h->apagados = 0;
+	free(h->Tabela);
+	h->Tabela = temp;
+}
 \end{minted}
 
 \noindent \textbf{Exercício 32}
 
+
+
+\noindent \textbf{Exercício 33}\\
+
+\noindent O valor de balanço presente em cada nodo da árvore indica o lado da árvore que tem maior altura, logo seguindo o caminho indicado pelo balanço dos nodos, chegamos ao nível mais profundo da árvore, obtendo a sua altura. A complexidade é logarítmica, pois a função percorre todos os níveis da árvore, apenas uma vez.
+
 \begin{minted}{c}
+int altura(AVL arv) {
+	int height = 0;
+	
+	while (arv != NULL) {
+		arv = arv->balanco == Dir ? arv->dir : arv->esq;
+		height++;
+	}
+	
+	return height;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 34}
+\[
+	T_{extractMin}(N) = \Theta(\log_2(N)) \quad T_{insertTree}(N) = \Theta(\log_2(N))
+\]
+\[
+	T_{heap2AVL}(N) = 
+\]
+
+\noindent \textbf{Exercício 35}
+
+\begin{minted}{c}
+int allCopies(Dictionary dic, char key[11]) {
+	if (dic == NULL) return 0;
+	
+	int count = 0;
+	int comp = strcmp(dic->key, key);
+	
+	if (comp == 0) {
+		count++;
+		count += allCopies(dic->left, key);
+		count += allCopies(dic->right, key);
+	} else if (comp < 0)
+		count += allCopies(dic->right, key);
+	else
+		count += allCopies(dic->left, key);
+	
+	return count;
+}
+
+\end{minted}
+
+\noindent \textbf{Exercício 36}
+
+\begin{minted}{c}
+int heapOKRec(BTree arv, int value) {
+	if (arv == NULL) return 1;
+	if (value > arv->value) return 0;
+	return heapOKRec(arv->left, arv->value) &&
+		   heapOKRec(arv->right, arv->value);
+}
+
+int heapOK(BTree a) {
+	return a == NULL || heapOKRec(a, a->value);
+}
+\end{minted}
+
+\noindent \textbf{Exercício 37}
+
+\begin{minted}{c}
+#define PARENT(i) (i - 1) / 2
+#define LEFT(i) 2 * i + 1
+#define RIGHT(i) 2 * i + 2
+
+void swap(int * array, int i, int j) {
+	int temp = array[i];
+	array[i] = array[j];
+	array[j] = temp;
+}
+
+void bubbleUp(int * array, int i) {
+	int parent = PARENT(i);
+	while (i > 0 && array[parent] > array[i]) {
+		swap(array, i, parent);
+		i = parent;
+		parent = PARENT(parent);
+	}
+}
+
+void insertHeap(Heap *h, int x) {
+	if (h->used == h->size) {
+		h->size *= 2;
+		h->heap = realloc(h->heap, h->size * sizeof(int));
+	}
+	
+	h->heap[h->used] = x;
+	bubbleUp(h->heap, h->used++);
+}
+
+\end{minted}
+
+\noindent \textbf{Exercício 38}~
+\[
+	T_{heapify}(N) = 
+\]
+
+\noindent \textbf{Exercício 39}
+\[
+T_{deepest}(N) = 
+\begin{cases}
+	0 & N \leq 0 \\
+	1 + 2 \times T(N/2) & N > 0
+\end{cases}
+= \sum_{i=0}^{1+\log_2(N)} 2^i = 4 \times N - 1 = \Theta(N)
+\]
+
+\begin{minted}{c}
+int deepest(AVLTree *a) {
+	if (*a == NULL) return 0; 
+	int height = 1;
+	while (*a != NULL && ((*a)->left != NULL || 
+						  (*a)->right != NULL)) {
+		a = (*a)->bal == Right ?
+					&((*a)->right) : &((*a)->left);
+		height++;
+	}
+		
+	return height;
+}
+\end{minted}
+\[
+T_{deepest}(N) = \Theta(\log_2(N))
+\]
+
+\noindent \textbf{Exercício 40}
+
+\begin{minted}{c}
+int fromChain(HashChain h1, HashOpen h2) {
+	// estou a assumir que h2 já está inicializada com Livre
+	int i, index;
+	struct lista * temp = NULL;
+	for (i = 0; i < HSIZE; i++) {
+		temp = h1[i];
+		index = i;
+		while (temp != NULL) {
+			while (h2[index].estado == 1)
+			index = (index + 1) % HSIZE;
+			
+			h2[index].estado = 1;
+			h2[index].valor = temp->valor;
+			
+			temp = temp->prox;
+		}
+	}
+	return 0;
+}
+\end{minted}
+
+\begin{minted}{c}
+#define CHAIN_SIZE ...
+#define OPEN_SIZE ...
+int fromChain(HashChain h1, HashOpen h2) {
+	// estou a assumir que h2 já está inicializada com Livre
+	int i, index;
+	struct lista * temp = NULL;
+	for (i = 0; i < CHAIN_SIZE; i++) {
+		temp = h1[i];
+		while (temp != NULL) {
+			index = hash(temp->valor, OPEN_SIZE);
+			while (h2[index].estado == 1)
+				index = (index + 1) % OPEN_SIZE;
+			
+			h2[index].estado = 1;
+			h2[index].valor = temp->valor;
+			
+			temp = temp->prox;
+		}
+	}
+	return 0;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 41}
+
+
+\noindent \textbf{Exercício 42}
+
+\begin{minted}{c}
+AVL maisProfundo(AVL a) {
+	while (a != NULL && (a->left != NULL || 
+						 ~a->right != NULL))
+		a = a->bal == RIGHT ? a->right : a->left;
+	
+	return a;
+}
+\end{minted}
+
+\noindent \textbf{Exercício 43}
+
+
+\noindent \textbf{Exercício 44}
+
+\begin{minted}{c}
+AVL fromList (LInt l, int n) {
+
+}
+\end{minted}
+
+\noindent \textbf{Exercício 45}
+
+
+
+\noindent \textbf{Exercício 46}
+
+\begin{minted}{c}
+int removeTHash(THash table, int key) {
+	
+}
+\end{minted}
+
+\noindent \textbf{Exercício 47}
+
+\begin{minted}{c}
+AVL rotateRight (AVL a) {
+
+}
 \end{minted}
 
 
