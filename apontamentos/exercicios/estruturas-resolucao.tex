@@ -425,9 +425,19 @@ int hash (int size, char key[]) {
 
 \noindent \textbf{Exercício 22}
 
-
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.8\textwidth]{imgs/estruturas_22.png}}
+	\caption{Inserir 25, 13, 22, 30, 40}
+\end{figure}
 
 \noindent \textbf{Exercício 23}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.6\textwidth]{imgs/estruturas_23.png}}
+	\caption{Remover 4, 10}
+\end{figure}
 
 \[
 	T_{hToAux}(N) =
@@ -486,7 +496,9 @@ void insert(Count *c, int x) {
 	c->store[x]++;
 	c->total++;
 }
+\end{minted}
 
+\begin{minted}{c}
 int check(Count *c, int x) { return c->store[x]; }
 
 void show(Count *c) {
@@ -500,6 +512,12 @@ void show(Count *c) {
 \end{minted}
 
 \noindent \textbf{Exercício 26}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.8\textwidth]{imgs/estruturas_26.png}}
+	\caption{Inserir 6}
+\end{figure}
 
 \begin{minted}{c}
 #define PARENT(i) ((i - 1) / 2)
@@ -520,10 +538,10 @@ int menor(MinHeap h, int i) {
 	return menor(h, left) && menor(h, right);
 }
 
-int minHeapOk(MinHeap h) {
-	return menor(h, 0);
-}
+int minHeapOk(MinHeap h) { return menor(h, 0); }
 \end{minted}
+
+\newpage
 
 \noindent \textbf{Exercício 27}
 
@@ -541,7 +559,13 @@ HashTable newTable(int hashsize) {
 
 \noindent \textbf{Exercício 28}
 
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.7\textwidth]{imgs/estruturas_28.png}}
+	\caption{Exercício 28}
+\end{figure}
 
+\newpage
 
 \noindent \textbf{Exercício 29}
 
@@ -609,7 +633,13 @@ void remApagados(THash h) {
 
 \noindent \textbf{Exercício 32}
 
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.7\textwidth]{imgs/estruturas_32.png}}
+	\caption{Procurar 12 e 37}
+\end{figure}
 
+\noindent Neste exercício estou a supor que se pode inserir valores duplicados, daí a procura de 37 continuar após o indíce 5, caso contrário a procura terminava na posição 5.\\
 
 \noindent \textbf{Exercício 33}\\
 
@@ -627,6 +657,8 @@ int altura(AVL arv) {
 	return height;
 }
 \end{minted}
+
+\newpage
 
 \noindent \textbf{Exercício 34}
 \[
@@ -656,7 +688,6 @@ int allCopies(Dictionary dic, char key[11]) {
 	
 	return count;
 }
-
 \end{minted}
 
 \noindent \textbf{Exercício 36}
