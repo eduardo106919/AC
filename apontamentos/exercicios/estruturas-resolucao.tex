@@ -112,7 +112,7 @@ void sinonimos(Dic d, char *pal) {
 		temp = temp->next;
 	if (temp != NULL) {
 		struct s *aux = temp->sins;
-		while (aux) {
+		while (aux != NULL) {
 			printf("'%s' == '%s'\n", pal, aux->sin);
 			aux = aux->next;
 		}
@@ -324,8 +324,8 @@ int rdir(AVL *tptr) {
 \noindent Tabelas de Hash:
 \begin{enumerate}[label=\alph*)]
 	\item quando todas as \texttt{n} inserções colidem na mesma posição, tornando a tabela de hash numa lista ligada, com complexidade de O(N) na pesquisa.
-	\item 
-	\item
+	\item sendo que não existe uma relação entre os elementos da tabela, para percorrê-los de forma ordenada, seria necessário recolhê-los para uma estrutura de dados, um array por exemplo. Esta operação teria um custo linear, $ \Theta(N) $. De seguida seria necessário ordenar o array, suponhamos que o custo seria $ \Theta(N \times \log(N)) $. Logo o tempo de execução seria $ \Theta(N \times \log(N)) $.
+	\item as Hash Tables são estruturas de dados eficientes em consultas, se a função de hash for boa e distribuir bem os elementos, em média teremos uma complexidade de $ \Theta(1) $. Mas se for necessário ter monotonia entre os elementos, as Hash Tables são pouco eficientes, pois não estabelecem ordem entre os elementos.
 \end{enumerate}
 
 \newpage
@@ -359,8 +359,8 @@ int rdir(AVL *tptr) {
 \noindent Tabela de Hash com resolução de colisões por Chaining:
 
 \begin{itemize}
-	\item 
-	\item 
+	\item o fator de carga em tabelas de Hash com resolução de colisões por Chaining corresponde ao tamanho médio de cada lista da tabela, ou seja, o número médio de colisões. O valor máximo possível é uma lista ter comprimento $ N $.
+	\item se o fator de carga está a 50\%, no melhor caso, metade das listas da tabela terão apenas um elemento, e numa procura falhada, será feita no máximo uma comparação, que dará falso. Logo no melhor caso a complexidade será de $ \Theta(1) $. No pior caso, uma das listas terá $ \frac{N}{2} $ elementos ($ N $ corresponde ao tamanho da tabela), enquanto que as restantes estarão vazias. Numa procura falhada será necessário percorrer essa lista até ao fim, logo a complexidade no pior caso é de $ \Theta(N) $.
 \end{itemize}
 
 \newpage
