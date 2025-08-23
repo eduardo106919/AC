@@ -790,7 +790,7 @@ int fromChain(HashChain h1, HashOpen h2) {
 \begin{minted}{c}
 AVL maisProfundo(AVL a) {
 	while (a != NULL && (a->left != NULL || 
-						 ~a->right != NULL))
+						 a->right != NULL))
 		a = a->bal == RIGHT ? a->right : a->left;
 	
 	return a;
@@ -803,8 +803,34 @@ AVL maisProfundo(AVL a) {
 \noindent \textbf{Exercício 44}
 
 \begin{minted}{c}
-AVL fromList (LInt l, int n) {
+AVL fromListRec(LInt *l, int n, int *height) {
+	if (n == 0) {
+		*height = 0;
+		return NULL;
+	}
+	
+	int hL, hR;
+	int middle = n / 2;
+	AVL left = fromListRec(l, middle, &hL);
+	
+	AVL root = malloc(sizeof(struct avl));
+	root->value = (*l)->value;
+	root->left = left;
+	
+	*l = (*l)->next;
+	
+	AVL right = fromListRec(l, n - middle - 1, &hR);
+	root->right = right;
+	
+	root->bal = hR - hL;
+	*height = (hL > hR ? hL : hR) + 1;
+	
+	return root;
+}
 
+AVL fromList (LInt l, int n) {
+	int h;
+	return fromListRec(&l, n, &h);
 }
 \end{minted}
 
@@ -815,8 +841,50 @@ AVL fromList (LInt l, int n) {
 \noindent \textbf{Exercício 46}
 
 \begin{minted}{c}
-int removeTHash(THash table, int key) {
+void shrinkTHash(THash h) {
+	int small_size = h->tamanho * 2;
+	small_size /= 3;
 	
+	struct entry * temp = calloc(small_size, 
+								 sizeof(struct entry));
+	int index, i;
+	for (i = 0; i < small_size; i++)
+		temp[i].status = LIVRE;
+	
+	for (i = 0; i < h->tamanho; i++) {
+		if (h->tabela[i].status == OCUPADO) {
+			index = hash(h->tabela[i].value, small_size);
+			while (temp[index].status == OCUPADO)
+				index = (index + 1) % small_size;
+			
+			temp[index].status = OCUPADO;
+			temp[index].value = h->tabela[i].value;
+		}
+	}
+	
+	free(h->tabela);
+	h->tabela = temp;
+	h->tamanho = small_size;
+}
+
+void removeTHash(THash h, int key) {
+	int index = hash(key, h->tamanho);
+	int count = 0;
+	
+	while (h->tabela[index].status != LIVRE && 
+		   count < h->tamanho) {
+		if (h->tabela[index].status == OCUPADO &&
+			h->tabela[index].value == key) {
+			h->tabela[index].status = APAGADO;
+			h->ocupados--;
+			break;
+		}
+		index = (index + 1) % h->tamanho;
+		count++;
+	}
+	
+	if ((h->ocupados / (float) h->tamanho) < 0.33)
+		shrinkTHash(h);
 }
 \end{minted}
 
@@ -824,12 +892,23 @@ int removeTHash(THash table, int key) {
 
 \begin{minted}{c}
 AVL rotateRight (AVL a) {
-
+	AVL left = a->esq;
+	
+	a->esq = left->dir;
+	left->dir = a;
+	
+	return left;
 }
 \end{minted}
-
-
-
+\[
+	T_{spine}(N) =
+	\begin{cases}
+		0 & N \leq 0 \\
+		1 + T(N - 1) & N > 0
+	\end{cases}
+	\quad = \quad \sum_{i=1}^{N} 1 = \Theta(N)
+\]
+Como a árvore já está em espinha, todos os nodos terão \texttt{a->esq == NULL}, logo o ciclo nunca será executado. Nesta análise estou a contar o número de vezes que a condição do ciclo é avaliada, que corresponde a uma vez por chamada recursiva.
 
 
 \end{document}
