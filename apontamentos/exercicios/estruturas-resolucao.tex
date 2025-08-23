@@ -5,6 +5,9 @@
 \usepackage{minted}
 \usepackage{enumitem}
 
+\usepackage[twoside,verbose,body={16cm,24cm},
+left=25mm,top=20mm]{geometry}
+
 
 \title{Estruturas de Dados\\ Resolução de exercícios de testes}
 \author{Eduardo Freitas Fernandes}
@@ -42,9 +45,8 @@ int insert(Tabela t, char matricula[6]) {
 	int index = hash(matricula) % SIZE;
 	struct no ** temp = &(t[index]);
 	
-	while (*temp != NULL && strcmp((*temp)->matricula, matricula)) {
+	while (*temp != NULL && strcmp((*temp)->matricula, matricula))
 		temp = &((*temp)->next);
-	}
 	
 	if (*temp == NULL) {
 		*temp = malloc(sizeof(struct no));
@@ -56,6 +58,7 @@ int insert(Tabela t, char matricula[6]) {
 }
 \end{minted}
 
+\newpage
 	
 \noindent \textbf{Exercício 2}
 
@@ -116,6 +119,8 @@ void sinonimos(Dic d, char *pal) {
 	}
 }
 \end{minted}
+
+\newpage
 
 \noindent \textbf{Exercício 5}
 
@@ -204,6 +209,8 @@ void show(Count *c) {
 }
 \end{minted}
 
+\newpage
+
 \noindent \textbf{Exercício 9}
 
 \begin{minted}{c}
@@ -239,18 +246,14 @@ int procura (ABPInt a, int l, int u) {
 	while (a != NULL) {
 		if (a->valor < u && a->valor > l)
 			return 1;
-		
 		if (a->valor >= u)
 			a = a->esq;
 		else if (a->valor <= l)
 			a = a->dir;
 	}
-	
 	return 0;
 }
 \end{minted}
-
-\newpage
 
 \noindent \textbf{Exercício 11}\\
 
@@ -263,6 +266,8 @@ int procura (ABPInt a, int l, int u) {
 	T(N) = \sum_{i=1}^{1+\log_2(N)} 1 = 1 + \log_2(N) = \Theta(\log_2(N))
 \]
 
+\newpage
+
 \noindent \textbf{Exercício 12}
 
 \begin{minted}{c}
@@ -271,7 +276,6 @@ int biggest(MinHeap *h) {
 	// logo basta percorrer apenas esses elementos
 	int stop = h->tamanho / 2;
 	int max = h->heap[h->tamanho - 1];
-	
 	for (int i = h->tamanho - 2; i >= 0 && i >= stop; i--)
 		if (h->heap[i] > max)
 			max = h->heap[i];
@@ -290,18 +294,15 @@ int rdir(AVL *tptr) {
 	AVL left = (*tptr)->esq;
 	(*tptr)->esq = left->dir;
 	*tptr = left;
-	
 	return 0;
 }
 \end{minted}
 
-\newpage
-
 \noindent \textbf{Exercício 14}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\fbox{\includegraphics[width=0.7\textwidth]{imgs/14-1.png}}
+	\fbox{\includegraphics[width=0.6\textwidth]{imgs/14-1.png}}
 	\caption{Inserir 10, 20, 30, 70}
 \end{figure}
 
@@ -327,6 +328,8 @@ int rdir(AVL *tptr) {
 	\item
 \end{enumerate}
 
+\newpage
+
 \noindent \textbf{Exercício 16}
 
 \begin{figure}[H]
@@ -340,6 +343,8 @@ int rdir(AVL *tptr) {
 	\fbox{\includegraphics[width=0.8\textwidth]{imgs/16-2.png}}
 	\caption{Remover 1}
 \end{figure}
+
+\newpage
 
 \noindent \textbf{Exercício 17}
 
@@ -357,6 +362,8 @@ int rdir(AVL *tptr) {
 	\item 
 	\item 
 \end{itemize}
+
+\newpage
 
 \noindent \textbf{Exercício 19}
 
@@ -415,12 +422,12 @@ int hash (int size, char key[]) {
 }
 \end{minted}
 
+
 \noindent \textbf{Exercício 22}
 
 
 
 \noindent \textbf{Exercício 23}
-
 
 \[
 	T_{hToAux}(N) =
