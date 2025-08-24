@@ -686,6 +686,18 @@ int altura(AVL arv) {
 
 \noindent \textbf{Exercício 35}
 
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.7\textwidth]{imgs/estruturas_35-1.png}}
+	\caption{Exercício 35-1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/estruturas_35-2.png}}
+	\caption{Exercício 35-2}
+\end{figure}
+
 \begin{minted}{c}
 int allCopies(Dictionary dic, char key[11]) {
 	if (dic == NULL) return 0;
@@ -756,6 +768,12 @@ void insertHeap(Heap *h, int x) {
 \end{minted}
 
 \noindent \textbf{Exercício 38}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/estruturas_38.png}}
+	\caption{Invocação \texttt{heapify()}}
+\end{figure}
 \[
 	T_{heapify}(N) = 
 \]
@@ -848,13 +866,20 @@ int fromChain(HashChain h1, HashOpen h2) {
 
 \begin{minted}{c}
 AVL maisProfundo(AVL a) {
-	while (a != NULL && (a->left != NULL || 
-						 a->right != NULL))
+	while (a != NULL && (a->left != NULL || a->right != NULL))
 		a = a->bal == RIGHT ? a->right : a->left;
 	
 	return a;
 }
 \end{minted}
+
+\begin{figure}[H]
+	\centering
+	\fbox{\includegraphics[width=0.5\textwidth]{imgs/estruturas_42.png}}
+	\caption{Árvore AVL}
+\end{figure}
+
+\noindent O resultado da função \texttt{maisProfundo()} aplicada à árvore apresentada será o nodo 29, presente no 4º nível da árvore.\\
 
 \noindent \textbf{Exercício 43}
 
