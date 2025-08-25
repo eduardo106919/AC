@@ -108,8 +108,10 @@ Arvore rr(Arvore arv) {
 void sinonimos(Dic d, char *pal) {
 	int index = hash(pal) % TAM;
 	struct p *temp = d[index];
+	
 	while (temp != NULL && strcmp(temp->pal, pal))
 		temp = temp->next;
+
 	if (temp != NULL) {
 		struct s *aux = temp->sins;
 		while (aux != NULL) {
@@ -181,6 +183,7 @@ Node buildBST(int arr[], int n) {
 
 \begin{minted}{c}
 #define SIZE 1001
+
 typedef struct count {
 	char store[SIZE];
 	int total;
@@ -188,6 +191,7 @@ typedef struct count {
 
 void init_count(Count *c) {
 	c->total = 0;
+
 	for (int i = 0; i < SIZE; i++)
 		c->store[i] = 0;
 }
@@ -197,7 +201,9 @@ void insert(Count *c, int x) {
 	c->store[x] = 1;
 }
 
-int check(Count *c, int x) { return c->store[x]; }
+int check(Count *c, int x) {
+	return c->store[x];
+}
 
 void show(Count *c) {
 	int count = 0, i;
@@ -677,12 +683,9 @@ int altura(AVL arv) {
 	\end{minipage}
 \end{figure}
 
-\[
-	T_{extractMin}(N) = \Theta(\log_2(N)) \quad T_{insertTree}(N) = \Theta(\log_2(N))
-\]
-\[
-	T_{heap2AVL}(N) = 
-\]
+\noindent Ambas as funções \texttt{extractMin()} e \texttt{insertTree()} têm uma complexidade logarítmica. Nas primeiras iterações do ciclo, a função remove elementos de uma min heap (quase) cheia, e insere numa árvore (quase) vazia. Nas iterações finais os papéis invertem-se, remove-se de uma heap (quase) vazia e insere-se numa árvore (quase) cheia. Logo em média teremos um custo logarítmico em cada iteração. São efetuadas N iterações, logo o custo da função \texttt{heap2AVL()} será $ \Theta(N \times \log_(N)) $.\\
+
+\newpage
 
 \noindent \textbf{Exercício 35}
 
@@ -694,9 +697,11 @@ int altura(AVL arv) {
 
 \begin{figure}[H]
 	\centering
-	\fbox{\includegraphics[width=0.9\textwidth]{imgs/estruturas_35-2.png}}
+	\fbox{\includegraphics[width=1\textwidth]{imgs/estruturas_35-2.png}}
 	\caption{Exercício 35-2}
 \end{figure}
+
+\newpage
 
 \begin{minted}{c}
 int allCopies(Dictionary dic, char key[11]) {
@@ -739,7 +744,6 @@ int heapOK(BTree a) {
 #define PARENT(i) (i - 1) / 2
 #define LEFT(i) 2 * i + 1
 #define RIGHT(i) 2 * i + 2
-
 void swap(int * array, int i, int j) {
 	int temp = array[i];
 	array[i] = array[j];
@@ -754,7 +758,9 @@ void bubbleUp(int * array, int i) {
 		parent = PARENT(parent);
 	}
 }
+\end{minted}
 
+\begin{minted}{c}
 void insertHeap(Heap *h, int x) {
 	if (h->used == h->size) {
 		h->size *= 2;
@@ -764,7 +770,6 @@ void insertHeap(Heap *h, int x) {
 	h->heap[h->used] = x;
 	bubbleUp(h->heap, h->used++);
 }
-
 \end{minted}
 
 \noindent \textbf{Exercício 38}
@@ -792,19 +797,18 @@ T_{deepest}(N) =
 int deepest(AVLTree *a) {
 	if (*a == NULL) return 0; 
 	int height = 1;
-	while (*a != NULL && ((*a)->left != NULL || 
-						  (*a)->right != NULL)) {
-		a = (*a)->bal == Right ?
-					&((*a)->right) : &((*a)->left);
+	while (*a != NULL && ((*a)->left != NULL || (*a)->right != NULL)) {
+		a = (*a)->bal == Right ? &((*a)->right) : &((*a)->left);
 		height++;
 	}
-		
 	return height;
 }
 \end{minted}
 \[
 T_{deepest}(N) = \Theta(\log_2(N))
 \]
+
+\newpage
 
 \noindent \textbf{Exercício 40}
 
@@ -818,7 +822,7 @@ int fromChain(HashChain h1, HashOpen h2) {
 		index = i;
 		while (temp != NULL) {
 			while (h2[index].estado == 1)
-			index = (index + 1) % HSIZE;
+				index = (index + 1) % HSIZE;
 			
 			h2[index].estado = 1;
 			h2[index].valor = temp->valor;
@@ -854,11 +858,13 @@ int fromChain(HashChain h1, HashOpen h2) {
 }
 \end{minted}
 
+\newpage
+
 \noindent \textbf{Exercício 41}
 
 \begin{figure}[H]
 	\centering
-	\fbox{\includegraphics[width=0.8\textwidth]{imgs/estruturas_41.png}}
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/estruturas_41.png}}
 	\caption{Inserir 40, 80, 60, 260, 54, 65, 140}
 \end{figure}
 
@@ -881,6 +887,8 @@ AVL maisProfundo(AVL a) {
 
 \noindent O resultado da função \texttt{maisProfundo()} aplicada à árvore apresentada será o nodo 29, presente no 4º nível da árvore.\\
 
+\newpage
+
 \noindent \textbf{Exercício 43}
 
 \begin{figure}[H]
@@ -898,25 +906,20 @@ AVL fromListRec(LInt *l, int n, int *height) {
 		return NULL;
 	}
 	
-	int hL, hR;
-	int middle = n / 2;
+	int hL, hR, middle = n / 2;
 	AVL left = fromListRec(l, middle, &hL);
-	
 	AVL root = malloc(sizeof(struct avl));
 	root->value = (*l)->value;
-	root->left = left;
-	
+	root->left = left;	
 	*l = (*l)->next;
 	
 	AVL right = fromListRec(l, n - middle - 1, &hR);
 	root->right = right;
-	
 	root->bal = hR - hL;
 	*height = (hL > hR ? hL : hR) + 1;
 	
 	return root;
 }
-
 AVL fromList (LInt l, int n) {
 	int h;
 	return fromListRec(&l, n, &h);
@@ -930,10 +933,9 @@ AVL fromList (LInt l, int n) {
 	\fbox{\includegraphics[width=0.7\textwidth]{imgs/estruturas_45-1.png}}
 	\caption{Inserir 3, 5, 8}
 \end{figure}
-
 \begin{figure}[H]
 	\centering
-	\fbox{\includegraphics[width=0.8\textwidth]{imgs/estruturas_45-2.png}}
+	\fbox{\includegraphics[width=0.9\textwidth]{imgs/estruturas_45-2.png}}
 	\caption{Inserir 10, 15 e Remover 5, 15}
 \end{figure}
 
@@ -941,37 +943,31 @@ AVL fromList (LInt l, int n) {
 
 \begin{minted}{c}
 void shrinkTHash(THash h) {
-	int small_size = h->tamanho * 2;
-	small_size /= 3;
-	
-	struct entry * temp = calloc(small_size, 
-								 sizeof(struct entry));
-	int index, i;
+	int small_size = (h->tamanho * 2) / 3, index, i;
+	struct entry * temp = calloc(small_size, sizeof(struct entry));
 	for (i = 0; i < small_size; i++)
 		temp[i].status = LIVRE;
-	
 	for (i = 0; i < h->tamanho; i++) {
 		if (h->tabela[i].status == OCUPADO) {
 			index = hash(h->tabela[i].value, small_size);
 			while (temp[index].status == OCUPADO)
 				index = (index + 1) % small_size;
-			
 			temp[index].status = OCUPADO;
 			temp[index].value = h->tabela[i].value;
 		}
 	}
-	
 	free(h->tabela);
 	h->tabela = temp;
 	h->tamanho = small_size;
 }
+\end{minted}
 
+\begin{minted}{c}
 void removeTHash(THash h, int key) {
 	int index = hash(key, h->tamanho);
 	int count = 0;
 	
-	while (h->tabela[index].status != LIVRE && 
-		   count < h->tamanho) {
+	while (h->tabela[index].status != LIVRE && count < h->tamanho) {
 		if (h->tabela[index].status == OCUPADO &&
 			h->tabela[index].value == key) {
 			h->tabela[index].status = APAGADO;
