@@ -1,117 +1,107 @@
-#include <stdio.h>
-#include <stdlib.h>
 
+#include <stdlib.h>
 
 #define NV 10
 
 typedef struct aresta {
-    int dest; int custo;
+    int dest;
+    int custo;
     struct aresta *prox;
-} *LAdj, *GrafoL [NV];
+} *LAdj, *GrafoL[NV];
 
-typedef int GrafoM [NV][NV];
+typedef int GrafoM[NV][NV];
 
-
-void fromMat (GrafoM in, GrafoL out) {
-    LAdj *temp = NULL;
-
+void fromMat(GrafoM in, GrafoL out) {
     int i, j;
+    LAdj temp = NULL;
     for (i = 0; i < NV; i++) {
-        temp = &out[i];
-
-        for (j = 0; j < NV; j++) {
+        out[i] = NULL;
+        for (j = NV - 1; j >= 0; j--) {
             if (in[i][j] != 0) {
-                *temp = malloc(sizeof(struct aresta));
-
-                // error handling ???
-                if (*temp == NULL)
-                    return;
-
-                (*temp)->dest = j;
-                (*temp)->custo = in[i][j];
-                temp = &((*temp)->prox);
+                temp = malloc(sizeof(struct aresta));
+                temp->dest = j;
+                temp->custo = in[i][j];
+                temp->prox = out[i];
+                out[i] = temp;
             }
         }
     }
 }
 
-void inverte (GrafoL in, GrafoL out) {
-    LAdj *temp = NULL;
+void inverte(GrafoL in, GrafoL out) {
+    int i;
+    for (i = 0; i < NV; i++)
+        out[i] = NULL;
 
-    int i, j;
-    for (i = 0; i < NV; i++) {
-        for (j = 0; j < NV; j++) {
-            if (in[j][i] != 0) {
-                temp = &out[j];
-                *temp = malloc(sizeof(struct aresta));
+    LAdj temp = NULL, build = NULL;
+    for (i = NV - 1; i >= 0; i--) {
+        temp = in[i];
 
-                // error handling ???
-                if (*temp == NULL)
-                    return;
+        while (temp != NULL) {
+            build = malloc(sizeof(struct aresta));
+            build->dest = i;
+            build->custo = temp->custo;
 
-                (*temp)->dest = j;
-                (*temp)->custo = in[j][i];
-                temp = &((*temp)->prox);
-            }
+            build->prox = out[temp->dest];
+            out[temp->dest] = build,
+
+            temp = temp->prox;
         }
     }
 }
 
-int inDegree (GrafoL g) {
-    int degrees[NV] = {0};
-    int max = 0;
+int inDegree(GrafoL g) {
+    int graus[NV];
+    int i, max = 0;
+
+    for (i = 0; i < NV; i++)
+        graus[i] = 0;
 
     LAdj temp = NULL;
-    for (int i = 0; i < NV; i++) {
+    for (i = 0; i < NV; i++) {
         temp = g[i];
         while (temp != NULL) {
-            degrees[temp->dest]++;
-
-            if (degrees[temp->dest] > degrees[max])
+            graus[temp->dest]++;
+            if (graus[temp->dest] > graus[max])
                 max = temp->dest;
 
             temp = temp->prox;
         }
     }
 
-    return max + 1;
+    return graus[max];
 }
 
-int colorOK (GrafoL g, int cor[]) {
+int colorOK(GrafoL g, int cor[]) {
+    int i;
     LAdj temp = NULL;
-    int result = 1;
+    char cond = 1;
 
-    for (int i = 0; i < NV && result != 0; i++) {
+    for (i = 0; i < NV && cond != 0; i++) {
         temp = g[i];
-
-        while (temp != NULL && result != 0) {
-            result = cor[i] == cor[temp->dest];
-
+        while (temp != NULL && cond != 0) {
+            cond = cor[i] != cor[temp->dest];
             temp = temp->prox;
         }
     }
 
-    return result;
+    return cond;
 }
 
-int homomorfOK (GrafoL g, GrafoL h, int f[]) {
+int homomorfOK(GrafoL g, GrafoL h, int f[]) {
+    int i;
     LAdj temp = NULL, other = NULL;
-    int result = 1;
 
-    for (int i = 0; i < NV && result != 0; i++) {
-        temp = g[i];
+    for (i = 0; i < NV; i++) {
+        for (temp = g[i]; temp != NULL; temp = temp->prox) {
+            for (other = h[f[i]]; other != NULL; other = other->prox)
+                if (temp->dest == f[other->dest])
+                    break;
 
-        while (temp != NULL && result != 0) {
-            other = h[f[i]];
-            while (other != NULL && result != 0) {
-                result = other->dest == f[temp->dest];
-
-                other = other->prox;
-            }
-
-            temp = temp->prox;
+            if (other == NULL)
+                return 0;
         }
     }
 
-    return result;
+    return 1;
 }
