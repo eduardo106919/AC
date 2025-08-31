@@ -278,13 +278,58 @@ int maxSoma(int v[], int N) {
 	
 	\section{Análise de Caso Médio}
 	
-	\noindent \textbf{Exercício 1}
+	\noindent \textbf{Exercício 1}\\
+	
+	\noindent \textbf{Pior caso}: $ T_{crescente}(N) = \sum_{i=1}^{N} 1 = N - 1 = O(N) $\\
+	
+	\noindent \textbf{Melhor caso}: $ T_{crescente}(N) = 1 = \Omega(1) $\\
+	\[
+		T_{crescente}(N) = \Omega(1), O(N)
+	\]
+	
+	\noindent \textbf{Caso médio}:
+	
+	\[
+		\overline{T}_{crescente}(N) = (\sum_{i=1}^{N-1} (\frac{1}{2})^{i-1} \times (1-\frac{1}{2}) \times i) + \frac{1}{2})^{N-1} \times (N - 1)
+	\]
+	\[
+		\overline{T}(N) = \sum_{i=1}^{N-1} (\frac{1}{2})^i \times i + \frac{1}{2})^{N-1} \times (N - 1) = \frac{1}{2} + \frac{1}{2} + \frac{3}{8} + \frac{1}{4} + \frac{5}{32} + ... < 2
+	\]
+	
+	\noindent Temos então $ \overline{T}_{crescente}(N) = \Theta(1) $.\\
 	
 	\noindent \textbf{Exercício 2}
 	
 	\noindent \textbf{Exercício 3}
 	
-	\noindent \textbf{Exercício 4}
+	\noindent \textbf{Exercício 4}\\
+	
+	\noindent Para calcular o valor esperado do número de bit flips teremos que escrever a soma dos vários casos possíveis, pesados pela respectiva probabilidade. Para isso efectuamos uma contagem dos inputs correspondentes a cada um dos casos:
+	
+	\begin{itemize}
+		\item metade dos bitvectors de comprimento N têm o bit menos significativo a 0
+		\item dos restantes, metade têm o segundo bit menos significativo a 0, i.e. terminam em 01;
+		\item dos restantes, metade têm o terceiro bit menos significativo a 0, i.e. terminam em 011;
+		\item e assim sucessivamente
+	\end{itemize}
+	
+	\noindent Temos então:
+	
+	\[
+		\overline{T}(N) = \frac{1}{2} \times 1 flip + \frac{1}{4} \times 2 flips + \frac{1}{8} \times 3 flips + ... + \frac{1}{2^N} \times N + \frac{1}{2^N} \times N
+	\]
+	
+	\noindent Existem duas situações em que ocorrem N bit flips:
+	
+	\begin{itemize}
+		\item todos os bits estão a 1, excepto o mais significativo (0111)
+		\item todos os bits estão a 1 (1111)
+	\end{itemize}
+	\[
+		\overline{T}(N) = \sum_{k=1}^{N} \frac{k}{2^k} + \frac{1}{2^N} \times N
+	\]
+	
+	\noindent Uma vez que $ \sum_{k=1}^{\infty} \frac{k}{2^k} = 2 $, temos $ \overline{T}(N) < 2 = \Theta(1) $.\\
 	
 	\noindent \textbf{Exercício 5}
 	
