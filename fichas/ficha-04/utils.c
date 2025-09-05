@@ -1,8 +1,6 @@
 #include "grafos.h"
 #include <stdio.h>
 
-
-
 static void lines(int N) {
     for (int i = 0; i < N; i++)
         printf("-");
@@ -139,9 +137,13 @@ static void swap(int array[], int i, int j) {
     array[j] = temp;
 }
 
-// TODO: implement minIndPeso()
-static int minIndPeso(int array[], int pesos[], int N) {
-    return 0;
+static int minIndPeso (int v[], int pesos[], int N) {
+    int i, r = 0;
+    for (i = 1; i < N; i++)
+        if (pesos[v[i]] < pesos[v[r]])
+            r = i;
+
+    return r;
 }
 
 int dijkstraSP(GrafoL g, int or, int pais[], int pesos[]) {
