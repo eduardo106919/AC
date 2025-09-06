@@ -1,7 +1,7 @@
 #include "grafos.h"
 #include <stdlib.h>
 
-
+/* complexidade: O(V^2) */
 void fromMat(GrafoM in, GrafoL out) {
     int i, j;
     LAdj temp = NULL;
@@ -19,6 +19,7 @@ void fromMat(GrafoM in, GrafoL out) {
     }
 }
 
+/* complexidade: O(V + E) */
 void inverte(GrafoL in, GrafoL out) {
     int i;
     for (i = 0; i < NV; i++)
@@ -41,6 +42,7 @@ void inverte(GrafoL in, GrafoL out) {
     }
 }
 
+/* complexidade: O(V + E) */
 int inDegree(GrafoL g) {
     int graus[NV];
     int i, max = 0;
@@ -63,6 +65,7 @@ int inDegree(GrafoL g) {
     return graus[max];
 }
 
+/* complexidade: O(V + E) */
 int colorOK(GrafoL g, int cor[]) {
     int i;
     LAdj temp = NULL;
@@ -79,6 +82,7 @@ int colorOK(GrafoL g, int cor[]) {
     return cond;
 }
 
+/* complexidade: O(V + E) */
 int homomorfOK(GrafoL g, GrafoL h, int f[]) {
     int i;
     LAdj temp = NULL, other = NULL;
