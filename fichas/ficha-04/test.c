@@ -102,7 +102,7 @@ int main(void) {
     // ordTop
 
     len = ordTop(gl1, path);
-    printf("ordTop(gl1, path): %d\n", len);
+    printf("\nordTop(gl1, path): %d\n", len);
     printf("path: [");
     for (int i = 0; i < len; i++)
         printf("%2d", path[i]);
@@ -118,7 +118,7 @@ int main(void) {
     // ciclo
 
     len = ciclo(gl1, path);
-    printf("ciclo(gl1, path): %d\n", len);
+    printf("\nciclo(gl1, path): %d\n", len);
     printf("path: [");
     for (int i = 0; i < len; i++)
         printf("%2d", path[i]);
@@ -144,7 +144,16 @@ int main(void) {
                       ,"#     #  #"
                       ,"##########"};
 
+    printf("\ncaminho (10, 10, mapa, 1,1,1,8): %d\n", caminho(10, 10, mapa, 1,1,1,8));
+    caminhoShow(10, 10, mapa, 1,1,1,8);
+    printf("caminho (10, 10, mapa, 7,1,8,8): %d\n", caminho(10, 10, mapa, 7,1,8,8));
+    caminhoShow(10, 10, mapa, 7,1,8,8);
+    printf("caminho (10, 10, mapa, 8,3,0,0): %d\n", caminho(10, 10, mapa, 8,3,0,0));
+    caminhoShow(10, 10, mapa, 8,3,0,0);
+    printf("caminho (10, 10, mapa, 8,8,1,8): %d\n", caminho(10, 10, mapa, 8,8,1,8));
+    caminhoShow(10, 10, mapa, 8,8,1,8);
+    
+    
 
-                      
     return 0;
 }

@@ -36,6 +36,7 @@ int componentes(GrafoL g, int c[]);
 int ordTop(GrafoL g, int ord[]);
 int ciclo(GrafoL g, int c[]);
 int caminho(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf);
+void caminhoShow(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf);
 
 /* grafos pesados */
 int excentricidadeV(GrafoL g, int v);

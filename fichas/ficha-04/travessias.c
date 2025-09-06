@@ -158,4 +158,116 @@ int ciclo(GrafoL g, int c[]) {
     return 0; // sem ciclos
 }
 
-int caminho(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf);
+struct ponto {
+    int x;
+    int y;
+    int dist;
+};
+
+int caminho(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf) {
+    // movimentos possíveis (N, S, E, O)
+    int dx[4] = {1, -1, 0, 0};
+    int dy[4] = {0, 0, 1, -1};
+
+    int i, j, nx, ny;
+    int vis[L][C];
+    for (i = 0; i < L; i++)
+        for (j = 0; j < C; j++)
+            vis[i][j] = 0;
+
+    struct ponto fila[NV * NV];
+    struct ponto atual;
+    int inicio = 0, fim = 0;
+
+    fila[fim++] = (struct ponto) {ls, cs, 0};
+    vis[ls][cs] = 1;
+
+    while (inicio < fim) {
+        atual = fila[inicio++];
+        // chegou ao ponto final
+        if (atual.x == lf && atual.y == cf)
+            return atual.dist;
+
+        for (i = 0; i < 4; i++) {
+            nx = atual.x + dx[i];
+            ny = atual.y + dy[i];
+
+            // verifica se as vizinhanças não são obstáculos, fora do mapa ou se já foram visitados
+            if (nx >= 0 && nx < L && ny >= 0 && ny < C && !vis[nx][ny] && mapa[nx][ny] != '#') {
+                vis[nx][ny] = 1;
+                fila[fim++] = (struct ponto) {nx, ny, atual.dist + 1};
+            }
+        }
+    }
+
+    // se não houver caminho
+    return -1;
+}
+
+
+void caminhoShow(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf) {
+    // movimentos possíveis (N, S, E, O)
+    int dx[4] = {1, -1, 0, 0};
+    int dy[4] = {0, 0, 1, -1};
+
+    // associar movimentos
+    char direcao[4] = {'S', 'N', 'E', 'O'};
+    int visitado[L][C];
+    // guarda o pai de cada célula
+    struct ponto pai[L][C];
+    // guarda o movimento que levou até lá
+    char mov[L][C];
+    int i, j, nx, ny;
+
+    for (i = 0; i < L; i++)
+        for (j = 0; j < C; j++) {
+            visitado[i][j] = 0;
+            pai[i][j].x = pai[i][j].y = -1;
+            mov[i][j] = '?';
+        }
+
+    struct ponto fila[NV * NV];
+    struct ponto atual;
+    int inicio = 0, fim = 0;
+
+    fila[fim++] = (struct ponto) {ls, cs, 0};
+    visitado[ls][cs] = 1;
+
+    while (inicio < fim) {
+        atual = fila[inicio++];
+        // encontrou ponto final
+        if (atual.x == lf && atual.y == cf) {
+            // reconstruir caminho
+            char caminho_str[NV * NV];
+            int len = 0;
+
+            int x = lf, y = cf;
+            // se não for o ponto de partida
+            while (!(x == ls && y == cs)) {
+                caminho_str[len++] = mov[x][y];
+                nx = pai[x][y].x;
+                ny = pai[x][y].y;
+                x = nx;
+                y = ny;
+            }
+
+            // inverter
+            for (i = len - 1; i >= 0; i--)
+                printf("%c ", caminho_str[i]);
+            printf("\n");
+        }
+
+        for (i = 0; i < 4; i++) {
+            nx = atual.x + dx[i];
+            ny = atual.y + dy[i];
+
+            // verifica se as vizinhanças não são obstáculos, fora do mapa ou se já foram visitados
+            if (nx >= 0 && nx < L && ny >= 0 && ny < C && !visitado[nx][ny] && mapa[nx][ny] != '#') {
+                visitado[nx][ny] = 1;
+                pai[nx][ny] = (struct ponto){atual.x, atual.y, 0};
+                mov[nx][ny] = direcao[i];
+                fila[fim++] = (struct ponto){nx, ny, atual.dist + 1};
+            }
+        }
+    }
+}
