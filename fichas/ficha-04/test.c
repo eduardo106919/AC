@@ -153,6 +153,62 @@ int main(void) {
     printf("caminho (10, 10, mapa, 8,8,1,8): %d\n", caminho(10, 10, mapa, 8,8,1,8));
     caminhoShow(10, 10, mapa, 8,8,1,8);
     
+
+    // excentricidadeV
+
+    printf("\nexcentricidadeV(gl1, 0): %d\n", excentricidadeV(gl1, 0));
+    printf("excentricidadeV(gl1, 2): %d\n", excentricidadeV(gl1, 2));
+    printf("excentricidadeV(gl1, 8): %d\n", excentricidadeV(gl1, 8));
+    printf("excentricidadeV(gl1, 6): %d\n", excentricidadeV(gl1, 6));
+
+    int pesos[NV];
+    for (int i = 0; i < NV; i++)
+        pesos[i] = -1;
+
+    printf("\ngeraCaminhoAutonomia(gl1, 0, path, pesos, 6): %d\n", geraCaminhoAutonomia(gl1, 0, path, pesos, 6));
+    printf("path: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", path[i]);
+    printf(" ]\n");
+    printf("pesos: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", pesos[i]);
+    printf(" ]\n");
+
+    for (int i = 0; i < NV; i++)
+        pesos[i] = -1;
+
+    printf("geraCaminhoAutonomia(gl1, 2, path, pesos, 6): %d\n", geraCaminhoAutonomia(gl1, 2, path, pesos, 6));
+    printf("path: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", path[i]);
+    printf(" ]\n");
+    printf("pesos: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", pesos[i]);
+    printf(" ]\n");
+
+    for (int i = 0; i < NV; i++)
+        pesos[i] = -1;
+
+    // Prim
+
+    printf("\nPrim(gl1, pesos, path): %d\n", Prim(gl1, pesos, path));
+    printf("path: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", path[i]);
+    printf(" ]\n");
+    printf("pesos: [");
+    for (int i = 0; i < NV; i++)
+        printf("%3d", pesos[i]);
+    printf(" ]\n");
+
+
+    // diametro
+
+    printf("\ndiametro(gl1): %d\n", diametro(gl1));
+    for (int i = 0; i < NV; i++)
+        printf("excentricidadeV(gl1, %d): %d\n", i, excentricidadeV(gl1, i));
     
 
     return 0;
