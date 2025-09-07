@@ -124,7 +124,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{imgs/2_1-a.png}
+		\fbox{\includegraphics[width=0.8\textwidth]{imgs/2_1-a.png}}
 	\end{figure}
 	\[
 		T(N) = \sum_{i=0}^{N} K = (N + 1) \times K = \Theta(N)
@@ -134,7 +134,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{imgs/2_1-b.png}
+		\fbox{\includegraphics[width=0.8\textwidth]{imgs/2_1-b.png}}
 	\end{figure}
 	\[
 		T(N) = \sum_{i=0}^{1 + \log_2(N)} K = (2 + \log_2(N)) \times K = \Theta(\log_2(N))
@@ -146,7 +146,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.6\textwidth]{imgs/2_1-c.png}
+		\fbox{\includegraphics[width=0.6\textwidth]{imgs/2_1-c.png}}
 	\end{figure}
 	\[
 		T(N) = \sum_{i=0}^{1 + \log_2(N)} 2^i \times K = K \times (2^{\log_2(N) + 2} - 1) = K \times (4 \times N - 1) = \Theta(N)
@@ -156,7 +156,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{imgs/2_1-d.png}
+		\fbox{\includegraphics[width=0.8\textwidth]{imgs/2_1-d.png}}
 	\end{figure}
 	\[
 		T(N) = K + \sum_{i=1}^{N} i = K + \frac{N \times (N + 1)}{2} = \Theta(N^2)
@@ -166,7 +166,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{imgs/2_1-e.png}
+		\fbox{\includegraphics[width=0.8\textwidth]{imgs/2_1-e.png}}
 	\end{figure}
 	\[
 		T(N) = K + \sum_{i=1}^{1 + \log_2(N)} \frac{N}{2^i} = K + 2^{\log_2(N) + 1} - 1 = K + 2 \times N - 1 = \Theta(N)
@@ -178,7 +178,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.6\textwidth]{imgs/2_1-f.png}
+		\fbox{\includegraphics[width=0.6\textwidth]{imgs/2_1-f.png}}
 	\end{figure}
 	\[
 		T(N) = K + \sum_{i=1}^{1 + \log_2(N)} N = K + N \times (1 + \log_2(N)) = \Theta(N \times \log_2(N))
@@ -215,7 +215,7 @@ int maxSoma(int v[], int N) {
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{imgs/2_3.png}
+		\fbox{\includegraphics[width=0.7\textwidth]{imgs/2_3.png}}
 	\end{figure}
 	
 	\[
@@ -290,10 +290,10 @@ int maxSoma(int v[], int N) {
 	\noindent \textbf{Caso médio}:
 	
 	\[
-		\overline{T}_{crescente}(N) = (\sum_{i=1}^{N-1} (\frac{1}{2})^{i-1} \times (1-\frac{1}{2}) \times i) + \frac{1}{2})^{N-1} \times (N - 1)
+		\overline{T}_{crescente}(N) = (\sum_{i=1}^{N-1} (\frac{1}{2})^{i-1} \times (1-\frac{1}{2}) \times i) + (\frac{1}{2})^{N-1} \times (N - 1)
 	\]
 	\[
-		\overline{T}(N) = \sum_{i=1}^{N-1} (\frac{1}{2})^i \times i + \frac{1}{2})^{N-1} \times (N - 1) = \frac{1}{2} + \frac{1}{2} + \frac{3}{8} + \frac{1}{4} + \frac{5}{32} + ... < 2
+		\overline{T}(N) = \sum_{i=1}^{N-1} (\frac{1}{2})^i \times i + (\frac{1}{2})^{N-1} \times (N - 1) = \frac{1}{2} + \frac{1}{2} + \frac{3}{8} + \frac{1}{4} + \frac{5}{32} + ... < 2
 	\]
 	
 	\noindent Temos então $ \overline{T}_{crescente}(N) = \Theta(1) $.\\
@@ -307,10 +307,10 @@ int maxSoma(int v[], int N) {
 	\noindent Para calcular o valor esperado do número de bit flips teremos que escrever a soma dos vários casos possíveis, pesados pela respectiva probabilidade. Para isso efectuamos uma contagem dos inputs correspondentes a cada um dos casos:
 	
 	\begin{itemize}
-		\item metade dos bitvectors de comprimento N têm o bit menos significativo a 0
-		\item dos restantes, metade têm o segundo bit menos significativo a 0, i.e. terminam em 01;
-		\item dos restantes, metade têm o terceiro bit menos significativo a 0, i.e. terminam em 011;
-		\item e assim sucessivamente
+		\item metade dos bitvectors de comprimento N têm o bit menos significativo a 0;
+		\item dos restantes, metade têm o \textbf{segundo} bit menos significativo a 0, i.e. terminam em 01;
+		\item dos restantes, metade têm o \textbf{terceiro} bit menos significativo a 0, i.e. terminam em 011;
+		\item e assim sucessivamente.
 	\end{itemize}
 	
 	\noindent Temos então:
@@ -338,11 +338,60 @@ int maxSoma(int v[], int N) {
 	
 	\section{Análise Amortizada}
 	
-	\noindent \textbf{Exercício 1}
+	\noindent \textbf{Exercício 1}\\
+	
+	\noindent Análise assimptótica da função \texttt{enqueue()}: a inserção de elementos é sempre feita na stack A, e as operações em stacks são constantes, a função tem sempre o mesmo comportamento seja qual for o input, logo:
+	\[
+		T_{enqueue}(N) = \Theta(1)
+	\]
+	
+	\noindent Análise assimptótica da função \texttt{dequeue()}:
+	\begin{itemize}
+		\item \textbf{Melhor caso}: a stack B não está vazia, $ T_{dequeue}(N) = \Omega(1) $.
+		\item \textbf{Pior caso}: a stack B está vazia, então remove-se todos os elementos de A e coloca-se em B, $ T_{dequeue}(N) = \sum_{i=1}^{N} 2 = 2 \times N = O(N) $.
+	\end{itemize}
+	\[
+		T_{dequeue}(N) = \Omega(1), O(N)
+	\]
+	
+	
+	
 	
 	\noindent \textbf{Exercício 2}
 	
-	\noindent \textbf{Exercício 3}
+	\noindent \textbf{Exercício 3}\\
+	
+	\noindent Análise assimptótica da função \texttt{insert\_rem}:
+	\begin{itemize}
+		\item \textbf{Melhor caso}: inserir \texttt{x} à cabeça da lista, $ T_{insert\_rem}(N) = \Omega(1) $.
+		\item \textbf{Pior caso}: inserir \texttt{x} no fim da lista, $ T_{insert\_rem}(N) = \sum_{i=1}^{N} 1 = O(N) $.
+	\end{itemize}
+	\[
+		T_{insert\_rem}(N) = \Omega(1), O(N)
+	\]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		i & input & output & $ c_i $ \\
+		\hline
+		\hline
+		1 & & 20 & 1 \\
+		2 & 20 & 70 & 2 \\
+		3 & 70 & 60 $\rightarrow$ 70 & 1 \\
+		4 & 60 $\rightarrow$ 70 & 30 $\rightarrow$ 60 $\rightarrow$ 70 & 1 \\
+		5 & 30 $\rightarrow$ 60 $\rightarrow$ 70 & 40 $\rightarrow$ 60 $\rightarrow$ 70 & 2 \\
+		6 & 40 $\rightarrow$ 60 $\rightarrow$ 70 & 50 $\rightarrow$ 60 $\rightarrow$ 70 & 2 \\
+		7 & 50 $\rightarrow$ 60 $\rightarrow$ 70 & 10 $\rightarrow$ 50 $\rightarrow$ 60 $\rightarrow$ 70 & 1 \\
+		8 & 10 $\rightarrow$ 50 $\rightarrow$ 60 $\rightarrow$ 70 & 80 & 5 \\
+		... & & & \\
+		\hline
+	\end{tabular}
+	\end{center}
+	
+	
+	
+	
+	
 	
 	
 \end{document}
