@@ -23,4 +23,4 @@ setup:
 
 clean:
 	rm -rf $(BLD_DIR)
-	rm $(BIN)
+	rm -f $(BIN)

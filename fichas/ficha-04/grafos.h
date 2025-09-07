@@ -21,6 +21,8 @@ void showGrafoL(GrafoL g, int type);
 void showGrafoM(GrafoM g, int type);
 int DF(GrafoL g, int or, int v[], int p[], int l[]);
 int BF(GrafoL g, int or, int v[], int p[], int l[]);
+void swap(int array[], int i, int j);
+int minIndPeso(int v[], int pesos[], int N);
 int dijkstraSP(GrafoL g, int or, int pais[], int pesos[]);
 
 /* representacoes */
@@ -40,6 +42,8 @@ void caminhoShow(int L, int C, char *mapa[L], int ls, int cs, int lf, int cf);
 
 /* grafos pesados */
 int excentricidadeV(GrafoL g, int v);
+int geraCaminhoAutonomia(GrafoL g, int or, int pais[], int pesos[], int autonomia);
+int Prim(GrafoL g, int pesos[], int pais[]);
 int diametro(GrafoL g);
 
 

@@ -131,13 +131,13 @@ int BF(GrafoL g, int or, int v[], int p[], int l[]) {
     return i;
 }
 
-static void swap(int array[], int i, int j) {
+void swap(int array[], int i, int j) {
     int temp = array[i];
     array[i] = array[j];
     array[j] = temp;
 }
 
-static int minIndPeso (int v[], int pesos[], int N) {
+int minIndPeso(int v[], int pesos[], int N) {
     int i, r = 0;
     for (i = 1; i < N; i++)
         if (pesos[v[i]] < pesos[v[r]])
