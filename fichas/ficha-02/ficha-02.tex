@@ -4,6 +4,8 @@
 \usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{fancyvrb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 \usepackage[twoside,verbose,body={16cm,24cm},
 left=25mm,top=20mm]{geometry}
@@ -354,14 +356,63 @@ int maxSoma(int v[], int N) {
 		T_{dequeue}(N) = \Omega(1), O(N)
 	\]
 	
+	\noindent \textbf{Análise Amortizada}:\\
 	
+	\noindent A \textbf{função de potencial} deve traduzir o trabalho efetuado em cada estado, então iremos usar o número de elementos na stack A como medida:
+	\[
+		\Phi(Q) = |A|
+	\]
 	
+	\noindent quantos mais elementos em A, maior será o trabalho futuro de os transferir para a stack B.
+	\begin{itemize}
+		\item $\Phi(Q) \geq 0$, o número de elementos na stack nunca é negativo
+		\item $\Phi(Q_0) = 0$, ambas as stacks começam vazias
+	\end{itemize}
 	
-	\noindent \textbf{Exercício 2}
+	\noindent Função \texttt{enqueue()}:\\
+	
+	\noindent O custo real de adicionar um elemento à stack A é constante, indicado no enunciado, logo $c_i = 1$. O potencial no estado $i$ é $|A|+1$, pois a stack A tem mais um elemento, enquanto que $\Phi_{i-1} = |A|$.
+	\begin{align*}
+		\hat{c}_i & = c_i + \Phi_i - \Phi_{i-1} \\
+		\hat{c}_i & = 1 + |A| + 1 - |A| = 2
+	\end{align*}
+	
+	\noindent Logo, podemos concluir que o custo amortizado de cada execução da função \texttt{enqueue()} é \textbf{constante}.\\
+	
+	\noindent Função \texttt{dequeue()}:\\
+	
+	\noindent Existem duas situações a analisar nesta função, quando a stack B não está vazia e quando está vazia. Quando a stack B não está vazia, a análise é simples, não há alteração no número de elementos da stack A, por isso a variação de potencial é nula, $\Delta \Phi = 0$, então o custo amortizado será igual ao custo real, que é 1.\\
+	
+	\noindent Quando a stack B está vazia, todos os elementos de A são passados para B. o custo desta operação é $ 2 |A| + 1 $, dado que é feito um \texttt{pop} e um \texttt{push} a todos os elementos, e por último um \texttt{pop}. O potencial no estado atual é 0, pois a stack A foi esvaziada, e no estado anterior é $|A|$.
+	\begin{align*}
+		\hat{c}_i & = c_i + \Phi_i + \Phi_{i-1} \\
+		\hat{c}_i & = 2 |A| + 1 + 0 - |A| \\
+		\hat{c}_i & = |A| + 1
+	\end{align*}
+		
+	\noindent O valor obtido indica que o custo amortizado de \texttt{dequeue()} é linear, mas estamos apenas a considerar uma sequência de operações \texttt{dequeue()}, e não as operações \texttt{enqueue()} que colocaram os elementos na stack A. Tendo isto em conta o custo amortizado é constante, pois o custo de remover todos os elementos de A é amortizado pelo custo de os colocar lá, ou seja, numa única operação o custo é linear, mas foi necessário N iterações da função \texttt{enqueue()}, com um custo constante, para amortizar o custo de \texttt{dequeue()}.\\
+	
+	\noindent \textbf{Exercício 2}\\
+	
+	\noindent Seja N o número de elementos na stack, a função de potencial a utilizar será $\Phi(Q) = N$. Existem duas situações a analisar: (1) k é menor que o número de elementos na stack, logo o custo real será k; (2) o número de elementos na stack é menor que k, logo o custo real será N.\\
+	
+	\noindent No caso de $ k < N $, o custo amortizado será:
+	\[
+		\hat{c}_i = k + N - k - N = 0
+	\]
+	
+	\noindent O potencial no estado anterior é N, que corresponde ao número de elementos da stack, o potencial no estado atual é $ N - k $, pois foram retirados k elementos à stack.\\
+	
+	\noindent No de caso de $ k \geq N $, o custo amortizado será:
+	\[
+		\hat{c}_i = N + 0 - N = 0
+	\]
+	
+	\noindent Neste caso, foram removidos todos os elementos da stack, daí o potencial no estado atual ser 0, pois a stack está vazia. Podemos então concluir que o \textbf{custo amortizado} da função \texttt{multiPop()} é O(1).\\
 	
 	\noindent \textbf{Exercício 3}\\
 	
-	\noindent Análise assimptótica da função \texttt{insert\_rem}:
+	\noindent Análise \textbf{assimptótica} da função \texttt{insert\_rem}:
 	\begin{itemize}
 		\item \textbf{Melhor caso}: inserir \texttt{x} à cabeça da lista, $ T_{insert\_rem}(N) = \Omega(1) $.
 		\item \textbf{Pior caso}: inserir \texttt{x} no fim da lista, $ T_{insert\_rem}(N) = \sum_{i=1}^{N} 1 = O(N) $.
@@ -369,6 +420,9 @@ int maxSoma(int v[], int N) {
 	\[
 		T_{insert\_rem}(N) = \Omega(1), O(N)
 	\]
+	
+	\noindent Análise \textbf{agregada}:
+	
 	\begin{center}
 	\begin{tabular}{|c|c|c|c|}
 		\hline
