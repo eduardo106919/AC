@@ -289,7 +289,7 @@ int maxSoma(int v[], int N) {
 		T_{crescente}(N) = \Omega(1), O(N)
 	\]
 	
-	\noindent \textbf{Caso médio}:
+	\noindent \textbf{Caso médio} da função \texttt{crescente()}:
 	
 	\[
 		\overline{T}_{crescente}(N) = (\sum_{i=1}^{N-1} (\frac{1}{2})^{i-1} \times (1-\frac{1}{2}) \times i) + (\frac{1}{2})^{N-1} \times (N - 1)
@@ -300,9 +300,29 @@ int maxSoma(int v[], int N) {
 	
 	\noindent Temos então $ \overline{T}_{crescente}(N) = \Theta(1) $.\\
 	
+	\noindent \textbf{Caso médio} da função \texttt{maxCresc()}:
+	\[
+		\overline{T}_{maxCresc}(N) = \sum_{i=0}^{N-1} \overline{T}_{crescente}(N) = \sum_{i=0}^{N-1} 1 = \Theta(N)
+	\]
+	
+	\newpage
+	
 	\noindent \textbf{Exercício 2}
 	
-	\noindent \textbf{Exercício 3}
+	\noindent \textbf{Exercício 3}\\
+	
+	\noindent \textbf{Pior caso}: $ T_{strNdif}(N) = \sum_{i=1}^{N} 1 = N - 1 = O(N) $\\
+	
+	\noindent \textbf{Melhor caso}: $ T_{strNdif}(N) = 1 = \Omega(1) $\\
+	\[
+	T_{strNdif}(N) = \Omega(1), O(N)
+	\]
+	
+	\noindent \textbf{Caso médio} da função \texttt{strNdif()}:
+	\[
+	\overline{T}_{strNdif}(N) = (\sum_{i=0}^{N-1} (\frac{1}{26})^{i-1} \times (1-\frac{1}{26}) \times i) + (\frac{1}{26})^{N-1} \times (N - 1)
+	\]
+	
 	
 	\noindent \textbf{Exercício 4}\\
 	
@@ -335,8 +355,11 @@ int maxSoma(int v[], int N) {
 	
 	\noindent \textbf{Exercício 5}
 	
-	\noindent \textbf{Exercício 6}
+	\noindent \textbf{Exercício 6}\\
 	
+	\noindent \textbf{Melhor caso}: o array \texttt{a} não contém uma potência de 2, isto é, existe mais do que uma ocorrência do valor 1 no array, ou não existe nenhuma. O custo será $\Theta(N)$.\\
+	
+	\noindent \textbf{Pior caso}: o array \texttt{a} contém uma potência de 2, isto é, existe apenas uma ocorrência do valor 1 no array. O custo será $\Theta(2^N)$.\\
 	
 	\section{Análise Amortizada}
 	
@@ -396,14 +419,14 @@ int maxSoma(int v[], int N) {
 	
 	\noindent Seja N o número de elementos na stack, a função de potencial a utilizar será $\Phi(Q) = N$. Existem duas situações a analisar: (1) k é menor que o número de elementos na stack, logo o custo real será k; (2) o número de elementos na stack é menor que k, logo o custo real será N.\\
 	
-	\noindent No caso de $ k < N $, o custo amortizado será:
+	\noindent (1) No caso de $ k < N $, o custo amortizado será:
 	\[
 		\hat{c}_i = k + N - k - N = 0
 	\]
 	
 	\noindent O potencial no estado anterior é N, que corresponde ao número de elementos da stack, o potencial no estado atual é $ N - k $, pois foram retirados k elementos à stack.\\
 	
-	\noindent No de caso de $ k \geq N $, o custo amortizado será:
+	\noindent (2) No de caso de $ k \geq N $, o custo amortizado será:
 	\[
 		\hat{c}_i = N + 0 - N = 0
 	\]
@@ -442,10 +465,31 @@ int maxSoma(int v[], int N) {
 	\end{tabular}
 	\end{center}
 	
+	\newpage
 	
+	\noindent Custo das 8 operações:
+	\[
+		1 + 2 + 1 + 1 + 2 + 2 + 1 + 5 = 15
+	\]
 	
+	\noindent Custo \textbf{amortizado} por operação:
+	\[
+		\frac{15}{8} = 1.875
+	\]
 	
+	\noindent Seja N o número de elementos na lista, a função de \textbf{potencial} será a seguinte:
+	\[
+		\Phi(S) = N
+	\]
+
+	\noindent O custo de executar a função \texttt{insert\_rem()} é $ k + 1 $, sendo $k$ o número de elementos removidos e 1 o custo de adicionar. Podemos então calcular o custo amortizado:
+	\begin{align*}
+		\hat{c}_i & = c_i + \Phi_i - \Phi_{i-1} \\
+		\hat{c}_i & = k + 1 + (N - (k + 1)) - N \\
+		\hat{c}_i & = 2
+	\end{align*}
 	
+	\noindent Logo, podemos concluir que o custo amortizado de \texttt{insert\_rem()} é \textbf{constante}.
 	
 	
 \end{document}
