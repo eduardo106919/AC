@@ -21,7 +21,7 @@ left=25mm,top=20mm]{geometry}
 	
 	\section{Contagem}
 	
-	\textbf{Exercício 1}\\
+	\underline{\textbf{Exercício 1}}\\
 	
 	\noindent \textbf{Função \texttt{bubbleSort()}}:\\
 	
@@ -51,7 +51,7 @@ left=25mm,top=20mm]{geometry}
 	
 	\newpage
 	
-	\noindent \textbf{Exercício 2}\\
+	\noindent \underline{\textbf{Exercício 2}}\\
 	
 	\noindent Seja N o número de bits necessários para representar \texttt{x}, teremos a seguinte gama de valores:
 	\begin{itemize}
@@ -70,7 +70,7 @@ left=25mm,top=20mm]{geometry}
 	\noindent No pior caso, todos os bits estão a 1, logo a condição avaliada no \texttt{if statement} será sempre verdadeira, então a operação primitiva \texttt{+} será executada tantas vezes quanto as operações \texttt{\% / *}. Podemos concluir que a complexidade é \textbf{linear}, em função do número de bits, pois a cada iteração um dos bits de \texttt{x} passa a 0 e é efetuada uma adição.\\
 	
 	
-	\noindent \textbf{Exercício 3}
+	\noindent \underline{\textbf{Exercício 3}}\\
 	
 	\[
 		T(N) = \sum_{i=0}^{N-1} \sum_{j=i}^{N-1} \sum_{k=i}^{j} 1 = \sum_{i=0}^{N-1} \sum_{j=i}^{N-1} j-i+1 = \sum_{i=0}^{N-1} \sum_{j=i}^{N-1} j	
@@ -103,7 +103,7 @@ int maxSoma(int v[], int N) {
 	\]
 	
 	
-	\noindent \textbf{Exercício 4}\\
+	\noindent \underline{\textbf{Exercício 4}}\\
 	
 	\noindent Comparações entre elementos do array:
 	
@@ -120,7 +120,7 @@ int maxSoma(int v[], int N) {
 	
 	\section{Definições Recursivas}
 	
-	\noindent \textbf{Exercício 1}\\
+	\noindent \underline{\textbf{Exercício 1}}\\
 	
 	\noindent a)
 	
@@ -186,7 +186,7 @@ int maxSoma(int v[], int N) {
 		T(N) = K + \sum_{i=1}^{1 + \log_2(N)} N = K + N \times (1 + \log_2(N)) = \Theta(N \times \log_2(N))
 	\]
 	
-	\noindent \textbf{Exercício 2}
+	\noindent \underline{\textbf{Exercício 2}}\\
 	
 	\[
 		T(N) =
@@ -205,7 +205,7 @@ int maxSoma(int v[], int N) {
 	\]
 	
 	
-	\noindent \textbf{Exercício 3}
+	\noindent \underline{\textbf{Exercício 3}}\\
 	
 	\[
 		T(N) = 
@@ -226,7 +226,7 @@ int maxSoma(int v[], int N) {
 	
 	\newpage
 	
-	\noindent \textbf{Exercício 4}
+	\noindent \underline{\textbf{Exercício 4}}\\
 	
 	\[
 		T(N) = 
@@ -245,7 +245,7 @@ int maxSoma(int v[], int N) {
 		= \sum_{i=1}^{1 + \log_2(N)} 2 \times N = 2 \times N \times (1 + \log_2(N)) = \Theta(N \times \log_2(N))
 	\]
 	
-	\noindent \textbf{Exercício 5}\\
+	\noindent \underline{\textbf{Exercício 5}}\\
 	
 	\noindent \textbf{Árvores Equilibradas}
 	
@@ -275,12 +275,13 @@ int maxSoma(int v[], int N) {
 	\end{cases}
 	\quad = \quad \sum_{i=1}^{N} 1 = N = \Theta(N)
 	\]
-	
+	~
 	
 	
 	\section{Análise de Caso Médio}
 	
-	\noindent \textbf{Exercício 1}\\
+	
+	\noindent \underline{\textbf{Exercício 1}}\\
 	
 	\noindent \textbf{Pior caso}: $ T_{crescente}(N) = \sum_{i=1}^{N} 1 = N - 1 = O(N) $\\
 	
@@ -307,24 +308,27 @@ int maxSoma(int v[], int N) {
 	
 	\newpage
 	
-	\noindent \textbf{Exercício 2}
 	
-	\noindent \textbf{Exercício 3}\\
+	\noindent \underline{\textbf{Exercício 2}}\\
+	
+	
+	
+	\noindent \underline{\textbf{Exercício 3}}\\
 	
 	\noindent \textbf{Pior caso}: $ T_{strNdif}(N) = \sum_{i=1}^{N} 1 = N - 1 = O(N) $\\
 	
 	\noindent \textbf{Melhor caso}: $ T_{strNdif}(N) = 1 = \Omega(1) $\\
 	\[
-	T_{strNdif}(N) = \Omega(1), O(N)
+		T_{strNdif}(N) = \Omega(1), O(N)
 	\]
 	
 	\noindent \textbf{Caso médio} da função \texttt{strNdif()}:
 	\[
-	\overline{T}_{strNdif}(N) = (\sum_{i=0}^{N-1} (\frac{1}{26})^{i-1} \times (1-\frac{1}{26}) \times i) + (\frac{1}{26})^{N-1} \times (N - 1)
+		\overline{T}_{strNdif}(N) = (\sum_{i=0}^{N-1} (\frac{1}{26})^{i-1} \times (1-\frac{1}{26}) \times i) + (\frac{1}{26})^{N-1} \times (N - 1)
 	\]
 	
 	
-	\noindent \textbf{Exercício 4}\\
+	\noindent \underline{\textbf{Exercício 4}}\\
 	
 	\noindent Para calcular o valor esperado do número de bit flips teremos que escrever a soma dos vários casos possíveis, pesados pela respectiva probabilidade. Para isso efectuamos uma contagem dos inputs correspondentes a cada um dos casos:
 	
@@ -336,7 +340,6 @@ int maxSoma(int v[], int N) {
 	\end{itemize}
 	
 	\noindent Temos então:
-	
 	\[
 		\overline{T}(N) = \frac{1}{2} \times 1 flip + \frac{1}{4} \times 2 flips + \frac{1}{8} \times 3 flips + ... + \frac{1}{2^N} \times N + \frac{1}{2^N} \times N
 	\]
@@ -353,17 +356,70 @@ int maxSoma(int v[], int N) {
 	
 	\noindent Uma vez que $ \sum_{k=1}^{\infty} \frac{k}{2^k} = 2 $, temos $ \overline{T}(N) < 2 = \Theta(1) $.\\
 	
-	\noindent \textbf{Exercício 5}
 	
-	\noindent \textbf{Exercício 6}\\
+	\noindent \underline{\textbf{Exercício 5}}\\
+	
+	\noindent \textbf{Árvore equilibrada:}\\
+	
+	\noindent De forma a calcularmos o número médio de iterações do ciclo, concentremo-nos em primeiro lugar no caso em que esta procura termina com sucesso. O caso em que a procura termina em insucesso corresponde ao \textbf{pior caso}, que tem um custo \textbf{logarítmico}. Assumindo que o elemento existe com igual probabilidade em qualquer posição da árvore, as possíveis execuções desta função correspondem a:
+	
+	\begin{itemize}
+		\item existe 1 possibilidade de o ciclo executar uma única vez: ou seja o custo será 1 com probabilidade $\frac{1}{N}$;
+		\item existem 2 possibilidades de o ciclo executar duas vezes: ou seja o custo será 2 com probabilidade $\frac{2}{N}$;
+		\item existem 3 possibilidades de o ciclo executar três vezes: ou seja o custo será 3 com probabilidade $\frac{3}{N}$;
+		\item ...
+		\item de uma forma genérica, existem $2^{k-1}$ possibilidades de o ciclo executar $k$ vezes: ou seja o custo será de $k$ com probabilidade $\frac{2^{k-1}}{N}$.
+	\end{itemize}
+	
+	\noindent O custo esperado é então dado por:
+	\begin{align*}
+		\overline{T}(N) = \quad &\sum_{k=1}^{\log_2 N-1} k \times \frac{2^{k-1}}{N}\\
+		= \quad &\frac{1}{N} \times \sum_{k=1}^{\log_2 N-1} k \times 2^{k-1}\\
+		= \quad &\frac{1}{N} \times ((\log_2(N) - 1) \times 2^{\log_2(N)} - (\log_2(N) \times 2^{\log_2(N)-1}) + 1)\\
+		= \quad &\frac{1}{N} \times ((\log_2(N) - 1) \times N - \frac{1}{2} \times N \times \log_2(N) + 1)\\
+		= \quad &\frac{1}{N} \times (\frac{1}{2} \times N \times \log_2(N) - N + 1)\\
+		= \quad & \frac{1}{2} \times \log_2(N) - 1 + \frac{1}{N}\\
+		= \quad &\Theta(\log_2 N)
+	\end{align*}
+	
+	\noindent Verificamos então que o caso médio corresponde ao pior caso, pois a maioria dos elementos estão situados no último nível da árvore.\\
+	
+	\noindent \textbf{Árvore lista:}\\
+	
+	\noindent Nesta configuração de árvore, a procura binária passará a ser uma procura \textbf{sequencial}, e a altura da àrvore corresponderá ao seu número de elementos. Assumindo que o elemento existe com igual probabilidade em qualquer posição da árvore, as possíveis execuções desta função correspondem a:
+	
+	\begin{itemize}
+		\item existe 1 possibilidade de o ciclo executar uma única vez: ou seja o custo será 1 com probabilidade $\frac{1}{N}$;
+		\item existe 1 possibilidade de o ciclo executar duas vezes: ou seja o custo será 2 com probabilidade $\frac{1}{N}$;
+		\item existe 1 possibilidade de o ciclo executar três vezes: ou seja o custo será 3 com probabilidade $\frac{1}{N}$;
+		\item ...
+		\item de uma forma genérica, existe 1 possibilidade de o ciclo executar $k$ vezes: ou seja o custo será de $k$ com probabilidade $\frac{1}{N}$.
+	\end{itemize}
+	
+	\noindent O custo esperado é então dado por:
+	\begin{align*}
+		\overline{T}(N) = \quad &\sum_{k=0}^{N-1} k \times \frac{1}{N}\\
+		= \quad &\frac{1}{N} \times \sum_{k=0}^{N-1} k\\
+		= \quad &\frac{1}{N} \times \frac{N \times (N-1)}{2}\\
+		= \quad &N-1\\
+		= \quad &\Theta(N)
+	\end{align*}
+	
+	\noindent Concluimos que, se a árvore for degenerada, o custo médio será \textbf{linear}.\\
+	
+	
+	\noindent \underline{\textbf{Exercício 6}}\\
 	
 	\noindent \textbf{Melhor caso}: o array \texttt{a} não contém uma potência de 2, isto é, existe mais do que uma ocorrência do valor 1 no array, ou não existe nenhuma. O custo será $\Theta(N)$.\\
 	
 	\noindent \textbf{Pior caso}: o array \texttt{a} contém uma potência de 2, isto é, existe apenas uma ocorrência do valor 1 no array. O custo será $\Theta(2^N)$.\\
 	
+	
+	
 	\section{Análise Amortizada}
 	
-	\noindent \textbf{Exercício 1}\\
+	
+	\noindent \underline{\textbf{Exercício 1}}\\
 	
 	\noindent Análise assimptótica da função \texttt{enqueue()}: a inserção de elementos é sempre feita na stack A, e as operações em stacks são constantes, a função tem sempre o mesmo comportamento seja qual for o input, logo:
 	\[
@@ -414,8 +470,9 @@ int maxSoma(int v[], int N) {
 	\end{align*}
 		
 	\noindent O valor obtido indica que o custo amortizado de \texttt{dequeue()} é linear, mas estamos apenas a considerar uma sequência de operações \texttt{dequeue()}, e não as operações \texttt{enqueue()} que colocaram os elementos na stack A. Tendo isto em conta o custo amortizado é constante, pois o custo de remover todos os elementos de A é amortizado pelo custo de os colocar lá, ou seja, numa única operação o custo é linear, mas foi necessário N iterações da função \texttt{enqueue()}, com um custo constante, para amortizar o custo de \texttt{dequeue()}.\\
-	
-	\noindent \textbf{Exercício 2}\\
+
+
+	\noindent \underline{\textbf{Exercício 2}}\\
 	
 	\noindent Seja N o número de elementos na stack, a função de potencial a utilizar será $\Phi(Q) = N$. Existem duas situações a analisar: (1) k é menor que o número de elementos na stack, logo o custo real será k; (2) o número de elementos na stack é menor que k, logo o custo real será N.\\
 	
@@ -433,7 +490,8 @@ int maxSoma(int v[], int N) {
 	
 	\noindent Neste caso, foram removidos todos os elementos da stack, daí o potencial no estado atual ser 0, pois a stack está vazia. Podemos então concluir que o \textbf{custo amortizado} da função \texttt{multiPop()} é O(1).\\
 	
-	\noindent \textbf{Exercício 3}\\
+	
+	\noindent \underline{\textbf{Exercício 3}}\\
 	
 	\noindent Análise \textbf{assimptótica} da função \texttt{insert\_rem}:
 	\begin{itemize}
