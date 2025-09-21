@@ -254,7 +254,7 @@ while (x > 0) { y = y+1; x = x-1;}
 \texttt{mult2:} $a \geq 0 \quad \land \quad a \times b + r == x \times y $
 \\ \\
 
-\noindent \textbf{2.} Para cada uma das funções seguintes, indique um \textbf{invariante} de ciclo que lhe permita provar a \textbf{correção parcial}. Em cada um dos casos, mesmo informalmente, apresente argumentos que lhe permitam demonstrar as propriedades \texttt{(inicialização, preservação e utilidade)} dos invariantes definidos.
+\noindent \textbf{2.} Para cada uma das funções seguintes, indique um \textbf{invariante} de ciclo que lhe permita provar a \textbf{correção parcial}. Em cada um dos casos, mesmo informalmente, apresente argumentos que lhe permitam demonstrar as propriedades \texttt{(inicialização, preservação e utilidade)} dos invariantes definidos.\\
 
 \noindent Indique também um \textbf{variante} de ciclo que lhe permita provar a \textbf{correção total}.
 
@@ -311,7 +311,7 @@ while (x > 0) { y = y+1; x = x-1;}
     
     V: $ \quad N - i $
     
-    \item $ \quad i \geq 0 \quad \land \quad r == \sum_{K=0}^{N-i-1} \  x^k \times coef[i+k] $
+    \item I: $ \quad i \geq 0 \quad \land \quad r == \sum_{K=0}^{N-i-1} \  x^k \times coef[i+k] $
     
     V: $ \quad i $
 \end{enumerate}
