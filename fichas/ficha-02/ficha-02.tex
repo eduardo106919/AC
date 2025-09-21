@@ -275,7 +275,7 @@ int maxSoma(int v[], int N) {
 	\end{cases}
 	\quad = \quad \sum_{i=1}^{N} 1 = N = \Theta(N)
 	\]
-	~
+	
 	
 	
 	\section{Análise de Caso Médio}
@@ -317,15 +317,23 @@ int maxSoma(int v[], int N) {
 	
 	\noindent \textbf{Pior caso}: $ T_{strNdif}(N) = \sum_{i=1}^{N} 1 = N - 1 = O(N) $\\
 	
-	\noindent \textbf{Melhor caso}: $ T_{strNdif}(N) = 1 = \Omega(1) $\\
+	\noindent \textbf{Melhor caso}: $ T_{strNdif}(N) = 1 = \Omega(1) $
 	\[
 		T_{strNdif}(N) = \Omega(1), O(N)
 	\]
 	
 	\noindent \textbf{Caso médio} da função \texttt{strNdif()}:
 	\[
-		\overline{T}_{strNdif}(N) = (\sum_{i=0}^{N-1} (\frac{1}{26})^{i-1} \times (1-\frac{1}{26}) \times i) + (\frac{1}{26})^{N-1} \times (N - 1)
+		\overline{T}_{strNdif}(N) = \left(\sum_{i=0}^{N-1} \left(\frac{1}{26}\right)^i \times \left(1-\frac{1}{26}\right) \times (i+1)\right) + \left(\frac{1}{26}\right)^N \times N
 	\]
+	
+	\noindent O somatório apresentado é composto pelos seguintes elementos:
+	\begin{itemize}
+		\item $\left(\frac{1}{26}\right)^i$, indica a probabilidade de i elementos serem iguais;
+		\item $\left(1-\frac{1}{26}\right)$, indica a probabilidade de duas letras serem diferentes;
+		\item $(i+1)$, indica o custo de cada iteração.
+	\end{itemize}
+	\noindent Analisando o somatório verificamos que a probabilidade de as primeiras comparações serem falsas é maior, logo podemos concluir que o \textbf{caso médio} aproxima-se do \textbf{melhor caso} $\Omega(1)$.\\
 	
 	
 	\noindent \underline{\textbf{Exercício 4}}\\
@@ -415,6 +423,8 @@ int maxSoma(int v[], int N) {
 	\noindent \textbf{Pior caso}: o array \texttt{a} contém uma potência de 2, isto é, existe apenas uma ocorrência do valor 1 no array. O custo será $\Theta(2^N)$.\\
 	
 	
+	
+	\newpage
 	
 	\section{Análise Amortizada}
 	
