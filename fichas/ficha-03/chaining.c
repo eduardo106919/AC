@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define Size 100
+#define Size 10
 typedef struct nodo {
     char *chave; int ocorr;
     struct nodo *prox;
@@ -92,4 +92,16 @@ int removeT (char *s, THash t) {
     }
 
     return 1;
+}
+
+void show(THash t) {
+    Nodo * n = NULL;
+    for (int i = 0; i < Size; i++) {
+        printf("index [%d]\n", i);
+        n = t[i];
+        while (n != NULL) {
+            printf("\t%s -> %d\n", n->chave, n->ocorr);
+            n = n->prox;
+        }
+    }
 }

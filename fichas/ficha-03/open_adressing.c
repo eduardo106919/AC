@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define Size 100
+#define Size 10
 
 #define Free 0
 #define Used 1
@@ -142,3 +142,11 @@ Complexidade de garbage_collection:
     a tabela é percorrida 3 vezes, logo terá uma complexidade de O(N)
 */
 
+
+void show(THash t) {
+    for (int i = 0; i < Size; i++) {
+        printf("index [%d] | status [%d]\n", i, t[i].status);
+        if (t[i].status == Used)
+            printf("\tchave: '%s' | ocorr: %d\n", t[i].chave, t[i].ocorr);
+    }
+}
