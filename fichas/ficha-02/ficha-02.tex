@@ -422,7 +422,14 @@ int maxSoma(int v[], int N) {
 	
 	\noindent \textbf{Pior caso}: o array \texttt{a} contém uma potência de 2, isto é, existe apenas uma ocorrência do valor 1 no array. O custo será $\Theta(2^N)$.\\
 	
+	\noindent Ao efetuar uma análise à função, verificamos que existem dois custos possíveis, o melhor e pior caso. Logo o custo médio desta função corresponde à probabilidade do pior caso multiplicado pelo seu custo, adicionado à probabilidade do melhor caso multiplicado pelo seu custo.\\
 	
+	\noindent Sendo que a probabilidade de uma posição do array conter \texttt{0} ou \texttt{1} é igual ($\frac{1}{2}$), qualquer combinação do array terá a mesma probabilidade de acontecer, $p = \frac{1}{2^N}$. No melhor caso o custo será $N$, no pior caso o custo será $2^N + N$. Existem $N$ situações em que o pior caso acontece, que correspondem a uma posição do array conter o valor \texttt{1} e as restantes o valor \texttt{0}. Logo, existem $2^N - N$ situações em que o melhor caso acontece.
+	\[
+	\overline{T}(N) = \sum_{i=0}^{N} (2^N + N) \times \frac{1}{2^N} + \sum_{j=0}^{2^N - N} N \times \frac{1}{2^N} = N + \frac{N^2}{N} + N - \frac{N^2}{N} = \Theta(N)	
+	\]
+	
+	\noindent Podemos então verificar, que em média, o comportamento desta função aproxima-se do \textbf{melhor caso}. Isto deve-se ao facto de a probabilidade do pior caso ocorrer ser baixa.
 	
 	\newpage
 	
